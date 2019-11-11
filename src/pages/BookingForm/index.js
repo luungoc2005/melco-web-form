@@ -15,6 +15,8 @@ import Chip from '@material-ui/core/Chip';
 
 import MuiPhoneNumber from 'material-ui-phone-number';
 
+import _format from 'date-fns/format';
+
 const useStyles = makeStyles(theme => ({
   buttonNoTransform: {
     textTransform: 'none',
@@ -30,40 +32,52 @@ export const BookingForm = () => {
   const { bookingReasons } = formData;
 
   const handleSubmit = async () => {
-    const { micrositeId, channelId, channelUserId } = getSearchParams();
+    const { micrositeId, ...params } = getSearchParams();
     const dialCode = formData.country.dialCode.toString();
     let mobile = formData.phoneNumber;
     const dialCodeIdx = mobile.indexOf(dialCode);
     if (dialCodeIdx > -1) {
-      mobile = mobile.substring(dialCodeIdx + dialCode.length);
+      mobile = mobile.substring(dialCodeIdx + dialCode.length).trim();
     }
 
     const requestData = {
       micrositeName: micrositeId,
-      visitDate: formData.visitDate,
+      visitDate: _format(formData.visitDate, 'yyyy-mm-dd'),
       visitTime: formData.visitTime,
-      partySize: formData.partySize.toString(),
+      partySize: formData.partySize,
       specialRequests: formData.specialRequests,
+      bookingReasonIds: formData.bookingReasons
+        .filter(item => item.checked)
+        .map(item => item.id),
       customer: {
         title: formData.title,
         firstName: formData.firstName,
         surname: formData.lastName,
-        mobileCountryCode: `+${formData.country.dialCode}`,
-        mobile,
-        bookingReasonIds: formData.bookingReasons
-          .filter(item => item.checked)
-          .map(item => item.id)
+        mobileCountryCode: formData.country.dialCode,
+        mobile
       }
     }
 
-    await RestaurantAPI.bookRestaurant({ channelId, channelUserId, data: requestData })
+    await RestaurantAPI.bookRestaurant({ params, data: requestData })
     window.close();
   }
 
   return (
     <>
       <RestaurantBanner restaurantData={restaurantData} />
-      
+
+      <Section title='Booking Details' style={{ width: '100%', display: 'flex', alignItems: 'stretch' }}>
+        <div style={{ flex: 1 }}>
+          {_format(formData.visitDate, 'd MMM (iii)')}
+        </div>
+        <div style={{ flex: 1 }}>
+          {formData.visitTime}
+        </div>
+        <div style={{ flex: 1 }}>
+          {`${formData.partySize} guest${formData.partySize > 1 ? 's' : ''}`}
+        </div> 
+      </Section>
+
       <Section title='Contact Information'>
         <ToggleButtonGroup
           value={formData.title}

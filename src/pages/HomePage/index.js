@@ -27,12 +27,12 @@ const useStyles = makeStyles(theme => ({
 export const HomePage = () => {
   const classes = useStyles();
   const { restaurantData, restaurantSetup, formData, setFormData, setCurrentPath } = useContext(AppContext) || {};
-  const [timeRanges, setTimeRanges] = useState([]);
+  const [timeRanges, setTimeRanges] = useState(null);
   const { minOnlinePartySize, maxOnlinePartySize } = restaurantSetup;
   useEffect(() => {
     console.log(getSearchParams())
     async function fetchData() {
-      setTimeRanges([])
+      setTimeRanges(null)
       setFormData({...formData, visitTime: ''})
 
       const { micrositeId } = getSearchParams();
@@ -102,7 +102,8 @@ export const HomePage = () => {
         })}
       </Section>
       <Section title='Time' style={{ textAlign: 'center' }}>
-        {timeRanges.map((value) => <ToggleButton
+        {Array.isArray(timeRanges) && (timeRanges.length
+        ? timeRanges.map((value) => <ToggleButton
           color="primary"
           variant="contained"
           value='check'
@@ -113,7 +114,11 @@ export const HomePage = () => {
           style={{ marginRight: 10, marginTop: 10 }}
         >
           {value}
-        </ToggleButton>)}
+        </ToggleButton>)
+        : timeRanges.length === 0 && <>
+          <div>There are no available time slots for this date.</div>
+          <div>Please try another one.</div>
+        </>)}
       </Section>
 
       <Button

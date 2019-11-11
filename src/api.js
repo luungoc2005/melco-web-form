@@ -3,7 +3,7 @@ import { stringify, parse } from 'querystring';
 
 const MELCO_SERVICE_API_URL = 'https://restaurant.dev.melco-dxeng.com'
 const MELCO_APP_API_URL = 'https://melcoapp-dev.melcoclub.cn'
-const BOTBOT_API_URL = 'http://melcomanilatesting.azurewebsites.net'
+const BOTBOT_API_URL = 'https://melcomanilatesting.azurewebsites.net'
 
 export const getSearchParams = () => parse(window.location.search.substring(1))
 
