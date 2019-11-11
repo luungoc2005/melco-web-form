@@ -20,25 +20,28 @@ const DAYS_OF_WEEK = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat']
 const useStyles = makeStyles(theme => ({
   buttonNoTransform: {
     textTransform: 'none',
-    label: {
-      display: 'flex',
-    }
+    fontWeight: 'initial',
   }
 })) 
 
 export const HomePage = () => {
   const classes = useStyles();
-  const { restaurantData, formData, setFormData, setCurrentPath } = useContext(AppContext) || {};
-  const [timeRanges, setTimeRanges] = useState([])
+  const { restaurantData, restaurantSetup, formData, setFormData, setCurrentPath } = useContext(AppContext) || {};
+  const [timeRanges, setTimeRanges] = useState([]);
+  const { minOnlinePartySize, maxOnlinePartySize } = restaurantSetup;
   useEffect(() => {
     console.log(getSearchParams())
     async function fetchData() {
+      setTimeRanges([])
+      setFormData({...formData, visitTime: ''})
+
       const { micrositeId } = getSearchParams();
       const resp = await RestaurantAPI.getRestaurantAvailability({ 
         micrositeId,
         partySize: formData.partySize,
         visitDate: _format(formData.visitDate, 'yyyy-MM-d')
       })
+
       setTimeRanges(resp.data || [])
     }
     fetchData();
@@ -50,9 +53,9 @@ export const HomePage = () => {
 
     return {
       value: retDay,
-      label: daysFromNow == 0
+      label: daysFromNow === 0
         ? 'Today'
-        : daysFromNow == 1
+        : daysFromNow === 1
           ? 'Tomorrow'
           : DAYS_OF_WEEK[retDay.getDay()]
     }
@@ -61,22 +64,23 @@ export const HomePage = () => {
   return (
     <>
       <RestaurantBanner restaurantData={restaurantData} />
-      <Section title='Guests'>
-        {_range(1, 7).map((value) => 
+      {restaurantSetup && <>
+      <Section title='Guests' style={{ textAlign: 'center' }}>
+        {_range(minOnlinePartySize, maxOnlinePartySize).map((value) => 
         <ToggleButton 
           key={value}
           value='check'
           aria-label={`${value} persons`}
           selected={formData.partySize === value}
           onChange={() => setFormData({...formData, partySize: value})}
-          style={{ marginRight: 10 }}
+          style={{ marginRight: 10, marginTop: 10 }}
           color="primary"
           variant="contained"
         >
           {value}
         </ToggleButton>)}
       </Section>
-      <Section title='Dates'>
+      <Section title='Dates' style={{ textAlign: 'center' }}>
         {_range(0, 5).map((value) => {
           const dateValue = getDateButton(value);
           return <ToggleButton
@@ -97,7 +101,7 @@ export const HomePage = () => {
           </ToggleButton>
         })}
       </Section>
-      <Section title='Time'>
+      <Section title='Time' style={{ textAlign: 'center' }}>
         {timeRanges.map((value) => <ToggleButton
           color="primary"
           variant="contained"
@@ -106,9 +110,9 @@ export const HomePage = () => {
           selected={formData.visitTime === value}
           aria-label={value}
           onChange={() => setFormData({...formData, visitTime: value})}
-          style={{ marginRight: 10 }}
+          style={{ marginRight: 10, marginTop: 10 }}
         >
-
+          {value}
         </ToggleButton>)}
       </Section>
       <Button
@@ -118,7 +122,8 @@ export const HomePage = () => {
         onClick={() => setCurrentPath('/form')}
       >
         Continue
-      </Button>
+      </Button> 
+      </>}
     </>
   )
 }

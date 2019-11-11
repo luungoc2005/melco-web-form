@@ -32,12 +32,20 @@ function App() {
     console.log(getSearchParams())
     const { micrositeId } = getSearchParams();
     async function fetchRestaurantData() {
-      const resp = await RestaurantAPI.getRestaurant({ micrositeId })
-      setRestaurantData(resp.data);
+      if (micrositeId) {
+        const resp = await RestaurantAPI.getRestaurant({ micrositeId })
+        setRestaurantData(resp.data);
+      }
     }
     async function fetchRestaurantSetup() {
-      const resp = await RestaurantAPI.getOnlineBookingSetup({ micrositeId })
-      setRestaurantSetup(resp.data);
+      if (micrositeId) {
+        const resp = await RestaurantAPI.getOnlineBookingSetup({ micrositeId })
+        const data = resp.data;
+        const { bookingReasons } = data;
+        console.log(bookingReasons)
+        setRestaurantSetup(data);
+        setFormData({...formData, visitTime: '', bookingReasons});
+      }
     }
     fetchRestaurantData();
     fetchRestaurantSetup();

@@ -1,8 +1,5 @@
-import React, { useContext, useState, useEffect } from 'react';
+import React, { useContext } from 'react';
 
-// import countries from './countries.json';
-
-import { getSearchParams, RestaurantAPI } from '../../api';
 import { AppContext } from '../../context';
 import { RestaurantBanner } from '../../components/restaurant_banner';
 import { Section } from '../../components/section';
@@ -12,9 +9,7 @@ import Button from '@material-ui/core/Button';
 import ToggleButton from '@material-ui/lab/ToggleButton';
 import ToggleButtonGroup from '@material-ui/lab/ToggleButtonGroup';
 import TextField from '@material-ui/core/TextField';
-import Autocomplete from '@material-ui/lab/Autocomplete';
-import FormControl from '@material-ui/core/FormControl';
-import InputLabel from '@material-ui/core/InputLabel';
+import Chip from '@material-ui/core/Chip';
 
 import MuiPhoneNumber from 'material-ui-phone-number';
 
@@ -30,22 +25,26 @@ const useStyles = makeStyles(theme => ({
 export const BookingForm = () => {
   const classes = useStyles();
   const { restaurantData, restaurantSetup, formData, setFormData } = useContext(AppContext) || {};
+  const { bookingReasons } = formData;
+  console.log(formData)
 
   return (
     <>
       <RestaurantBanner restaurantData={restaurantData} />
+      
       <Section title='Contact Information'>
         <ToggleButtonGroup
           value={formData.title}
           exclusive
           onChange={(event, value) => setFormData({...formData, title: value})}
           aria-label="title"
-          style={{ width: '100%' }}
+          style={{ width: '100%', alignItems: 'stretch' }}
         >
           {['Mr.', 'Ms.', 'Mrs.'].map((value) => <ToggleButton
             key={value}
             value={value}
             className={classes.buttonNoTransform}
+            style={{ flex: 1 }}
           >
             {value}
           </ToggleButton>)}
@@ -59,6 +58,9 @@ export const BookingForm = () => {
           margin="normal"
           value={formData.firstName}
           onChange={(event) => setFormData({...formData, firstName: event.target.value})}
+          InputLabelProps={{
+            shrink: true,
+          }}
         />
 
         <TextField
@@ -69,6 +71,9 @@ export const BookingForm = () => {
           margin="normal"
           value={formData.lastName}
           onChange={(event) => setFormData({...formData, lastName: event.target.value})}
+          InputLabelProps={{
+            shrink: true,
+          }}
         />
 
         <MuiPhoneNumber 
@@ -92,6 +97,9 @@ export const BookingForm = () => {
             type: 'email'
           }}
           onChange={(event) => setFormData({...formData, email: event.target.value})}
+          InputLabelProps={{
+            shrink: true,
+          }}
         />
       </Section>
 
@@ -107,7 +115,18 @@ export const BookingForm = () => {
       </Section>
 
       <Section title='Special Occasions'>
-
+        {bookingReasons && bookingReasons.map((value) => <Chip
+          key={value.id}
+          label={value.name}
+          onClick={() => setFormData({
+            ...formData, 
+            bookingReasons: bookingReasons.map(
+              item => item.id === value.id ? {...value, checked: !value.checked} : item
+            )
+          })}
+          variant={value.checked ? 'default' : 'outlined'}
+          style={{ marginRight: 20 }}
+        />)}
       </Section>
 
       <Button
@@ -117,6 +136,7 @@ export const BookingForm = () => {
       >
         Book
       </Button>
+      
     </>
   )
 }

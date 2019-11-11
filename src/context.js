@@ -10,6 +10,7 @@ export const DEFAULT_FORM_DATA = {
   phoneNumber: '',
   email: '',
   specialRequests: '',
+  bookingReasons: [],
 }
 
 export const AppContext = createContext({
