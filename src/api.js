@@ -16,8 +16,8 @@ export const RestaurantAPI = {
   }),
   getRestaurantAvailability: ({ micrositeId, partySize, visitDate }) => 
     axios.get(`${MELCO_SERVICE_API_URL}/v1/restaurants/${micrositeId}/availabilitySearch?${stringify({ partySize, visitDate })}`),
-  bookRestaurant: ({ channelId, channelUserId, data }) => 
-    axios.post(`${BOTBOT_API_URL}/api/resBooking/booking?${stringify({ channelId, channelUserId })}`, data)
+  bookRestaurant: ({ params, data }) => 
+    axios.post(`${BOTBOT_API_URL}/api/resBooking/booking?${stringify(params)}`, data)
 }
 
 export default RestaurantAPI;

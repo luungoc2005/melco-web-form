@@ -8,8 +8,10 @@ import { Section } from '../../components/section';
 import { withStyles, makeStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import ToggleButton from '@material-ui/lab/ToggleButton';
+import Icon from '@material-ui/core/Icon';
+import CircularProgress from '@material-ui/core/CircularProgress';
 // import ToggleButtonGroup from '@material-ui/lab/ToggleButtonGroup';
-import Typography from '@material-ui/core/Typography';
+// import Typography from '@material-ui/core/Typography';
 
 import _addDays from 'date-fns/addDays';
 import _format from 'date-fns/format';
@@ -28,21 +30,24 @@ export const HomePage = () => {
   const classes = useStyles();
   const { restaurantData, restaurantSetup, formData, setFormData, setCurrentPath } = useContext(AppContext) || {};
   const [timeRanges, setTimeRanges] = useState(null);
+  const [timeRangesLoading, setTimeRangesLoading] = useState(false);
   const { minOnlinePartySize, maxOnlinePartySize } = restaurantSetup;
   useEffect(() => {
     console.log(getSearchParams())
     async function fetchData() {
-      setTimeRanges(null)
-      setFormData({...formData, visitTime: ''})
+      setTimeRanges(null);
+      setTimeRangesLoading(true);
+      setFormData({...formData, visitTime: ''});
 
       const { micrositeId } = getSearchParams();
       const resp = await RestaurantAPI.getRestaurantAvailability({ 
         micrositeId,
         partySize: formData.partySize,
         visitDate: _format(formData.visitDate, 'yyyy-MM-d')
-      })
+      });
 
-      setTimeRanges(resp.data || [])
+      setTimeRanges(resp.data || []);
+      setTimeRangesLoading(false);
     }
     fetchData();
   }, [formData.visitDate, formData.partySize])
@@ -73,7 +78,7 @@ export const HomePage = () => {
           aria-label={`${value} persons`}
           selected={formData.partySize === value}
           onChange={() => setFormData({...formData, partySize: value})}
-          style={{ marginRight: 10, marginTop: 10 }}
+          style={{ marginRight: 10, marginTop: 10, padding: '0 32px' }}
           color="primary"
           variant="contained"
         >
@@ -90,7 +95,7 @@ export const HomePage = () => {
             aria-label={dateValue.label}
             selected={_differenceInHours(dateValue.value, formData.visitDate) === 0}
             onChange={() => setFormData({...formData, visitDate: dateValue.value})}
-            style={{ marginRight: 10 }}
+            style={{ marginRight: 10, padding: '0 32px', height: 72 }}
             color="primary"
             variant="contained"
           >
@@ -102,6 +107,7 @@ export const HomePage = () => {
         })}
       </Section>
       <Section title='Time' style={{ textAlign: 'center' }}>
+        {timeRangesLoading && <CircularProgress />}
         {Array.isArray(timeRanges) && (timeRanges.length
         ? timeRanges.map((value) => <ToggleButton
           color="primary"
@@ -111,11 +117,12 @@ export const HomePage = () => {
           selected={formData.visitTime === value}
           aria-label={value}
           onChange={() => setFormData({...formData, visitTime: value})}
-          style={{ marginRight: 10, marginTop: 10 }}
+          style={{ marginRight: 10, marginTop: 10, padding: '0 32px' }}
         >
           {value}
         </ToggleButton>)
         : timeRanges.length === 0 && <>
+          <Icon>sentiment_dissatisfied</Icon>
           <div>There are no available time slots for this date.</div>
           <div>Please try another one.</div>
         </>)}

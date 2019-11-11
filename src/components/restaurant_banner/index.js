@@ -1,28 +1,41 @@
 import React from 'react';
 
-import AutoScale from 'react-auto-scale';
+import { PRIMARY_COLOR, SECONDARY_COLOR } from '../../App';
+
 import Typography from '@material-ui/core/Typography';
+import Icon from '@material-ui/core/Icon';
 
 export const RestaurantBanner = ({ restaurantData }) => {
   const { property, addressShort, phone, images } = restaurantData;
-  return (<div>
-    <div>
-      <Typography variant="h5">
+  return (<>
+  <div style={{ display: 'flex', marginBottom: 12 }} >
+    <div style={{ flex: 3 }}>
+      <Typography variant="h5" style={{ marginBottom: 24 }}>
         {property}
       </Typography>
-      <div>
-        <span>{addressShort}</span>
-      </div>
-      <div>
-        <span>{phone}</span>
-      </div>
+      {addressShort && <div>
+        <Typography variant="body1">
+          <Icon style={{ color: SECONDARY_COLOR, marginRight: 12, marginBottom: 12 }}>map</Icon>
+          {addressShort}
+        </Typography>
+      </div>}
+      {phone && <div style={{ color: SECONDARY_COLOR, }}>
+        <Typography variant="body1">
+          <Icon style={{ marginRight: 12 }}>call</Icon>
+          {phone}
+        </Typography>
+      </div>}
     </div>
-    <div>
-      {images && <AutoScale>
-        <img src={images[0]} alt={property} />
-      </AutoScale>}
+    <div style={{ flex: 1, overflow: 'hidden' }}>
+      {images && <img src={images[0]} alt={property} style={{ 
+        width: '100%',
+        height: '100%',
+        objectFit: 'cover' 
+      }} />}
     </div>
-  </div>)
+  </div>
+  <div style={{ borderBottom: '1px solid #ddd' }} />
+  </>)
 }
 
 export default RestaurantBanner;

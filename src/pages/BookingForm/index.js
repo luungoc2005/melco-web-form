@@ -1,5 +1,7 @@
 import React, { useContext } from 'react';
 
+import { PRIMARY_COLOR, SECONDARY_COLOR } from '../../App';
+
 import { getSearchParams, RestaurantAPI } from '../../api';
 
 import { AppContext } from '../../context';
@@ -12,6 +14,8 @@ import ToggleButton from '@material-ui/lab/ToggleButton';
 import ToggleButtonGroup from '@material-ui/lab/ToggleButtonGroup';
 import TextField from '@material-ui/core/TextField';
 import Chip from '@material-ui/core/Chip';
+import Icon from '@material-ui/core/Icon';
+import Typography from '@material-ui/core/Typography';
 
 import MuiPhoneNumber from 'material-ui-phone-number';
 
@@ -33,6 +37,7 @@ export const BookingForm = () => {
 
   const handleSubmit = async () => {
     const { micrositeId, ...params } = getSearchParams();
+    console.log(params)
     const dialCode = formData.country.dialCode.toString();
     let mobile = formData.phoneNumber;
     const dialCodeIdx = mobile.indexOf(dialCode);
@@ -42,7 +47,7 @@ export const BookingForm = () => {
 
     const requestData = {
       micrositeName: micrositeId,
-      visitDate: _format(formData.visitDate, 'yyyy-mm-dd'),
+      visitDate: _format(formData.visitDate, 'yyyy-MM-d'),
       visitTime: formData.visitTime,
       partySize: formData.partySize,
       specialRequests: formData.specialRequests,
@@ -66,15 +71,28 @@ export const BookingForm = () => {
     <>
       <RestaurantBanner restaurantData={restaurantData} />
 
-      <Section title='Booking Details' style={{ width: '100%', display: 'flex', alignItems: 'stretch' }}>
+      <Section 
+        title='Booking Details' 
+        style={{ width: '100%', display: 'flex', alignItems: 'stretch' }}
+        underline={true}
+      >
         <div style={{ flex: 1 }}>
-          {_format(formData.visitDate, 'd MMM (iii)')}
+          <Typography variant="body1">
+            <Icon style={{ color: SECONDARY_COLOR, marginRight: 12 }}>calendar_today</Icon>
+            {_format(formData.visitDate, 'd MMM (iii)')}
+          </Typography>
         </div>
         <div style={{ flex: 1 }}>
-          {formData.visitTime}
+          <Typography variant="body1">
+            <Icon style={{ color: SECONDARY_COLOR, marginRight: 12 }}>access_time</Icon>
+            {formData.visitTime}
+          </Typography>
         </div>
         <div style={{ flex: 1 }}>
-          {`${formData.partySize} guest${formData.partySize > 1 ? 's' : ''}`}
+          <Typography variant="body1">
+            <Icon style={{ color: SECONDARY_COLOR, marginRight: 12 }}>person</Icon>
+            {`${formData.partySize} guest${formData.partySize > 1 ? 's' : ''}`}
+          </Typography>
         </div> 
       </Section>
 
@@ -82,7 +100,7 @@ export const BookingForm = () => {
         <ToggleButtonGroup
           value={formData.title}
           exclusive
-          onChange={(event, value) => setFormData({...formData, title: value})}
+          onChange={(event, value) => value && setFormData({...formData, title: value})}
           aria-label="title"
           style={{ width: '100%', alignItems: 'stretch' }}
         >
@@ -91,6 +109,7 @@ export const BookingForm = () => {
             value={value}
             className={classes.buttonNoTransform}
             style={{ flex: 1 }}
+            variant="outlined"
           >
             {value}
           </ToggleButton>)}
