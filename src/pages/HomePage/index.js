@@ -115,11 +115,17 @@ export const HomePage = () => {
           {value}
         </ToggleButton>)}
       </Section>
+
       <Button
         color="primary"
         fullWidth
         variant="contained"
         onClick={() => setCurrentPath('/form')}
+        disabled={
+          formData.partySize === '' || 
+          formData.visitDate === '' ||
+          formData.visitTime === ''
+        }
       >
         Continue
       </Button> 

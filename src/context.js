@@ -8,6 +8,7 @@ export const DEFAULT_FORM_DATA = {
   firstName: '',
   lastName: '',
   phoneNumber: '',
+  country: null,
   email: '',
   specialRequests: '',
   bookingReasons: [],
@@ -16,8 +17,8 @@ export const DEFAULT_FORM_DATA = {
 export const AppContext = createContext({
   currentPath: '',
   setCurrentPath: () => {},
-  restaurantData: {},
-  restaurantSetup: {},
+  restaurantData: null,
+  restaurantSetup: null,
   formData: DEFAULT_FORM_DATA,
   setFormData: () => {},
 })

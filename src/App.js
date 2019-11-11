@@ -41,10 +41,10 @@ function App() {
       if (micrositeId) {
         const resp = await RestaurantAPI.getOnlineBookingSetup({ micrositeId })
         const data = resp.data;
-        const { bookingReasons } = data;
+        const { bookingReasons, minOnlinePartySize } = data;
         console.log(bookingReasons)
         setRestaurantSetup(data);
-        setFormData({...formData, visitTime: '', bookingReasons});
+        setFormData({...formData, partySize: minOnlinePartySize, visitTime: '', bookingReasons});
       }
     }
     fetchRestaurantData();
