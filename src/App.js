@@ -7,7 +7,10 @@ import { BookingForm } from './pages/BookingForm';
 
 import { Header } from './components/header';
 import Typography from '@material-ui/core/Typography';
+import { MuiPickersUtilsProvider } from '@material-ui/pickers';
 import { withStyles, makeStyles } from '@material-ui/core/styles';
+
+import DateFnsUtils from '@date-io/date-fns';
 
 export const PRIMARY_COLOR = '#002B49'
 export const SECONDARY_COLOR = '#B58D3D'
@@ -75,6 +78,24 @@ const GlobalCss = withStyles({
       color: 'rgba(0, 0, 0, 0.54) !important',
     },
 
+    '.MuiPickersToolbar-toolbar': {
+      backgroundColor: SECONDARY_COLOR, 
+    },
+    '.MuiPickersBasePicker-container .MuiIconButton-root': {
+      backgroundColor: 'transparent',
+      color: '#333',
+    },
+    '.MuiPickersBasePicker-container .MuiPickersDay-daySelected': {
+      backgroundColor: SECONDARY_COLOR,
+      color: 'white',
+    },
+    '.MuiPickersBasePicker-container .MuiPickersDay-dayDisabled': {
+      color: 'rgba(0, 0, 0, 0.38)', 
+    },
+    '.MuiPickersModal-dialogRoot .MuiButton-textPrimary': {
+      color: SECONDARY_COLOR,
+    },
+
     'h5': {
       color: PRIMARY_COLOR,
       fontSize: '1.1rem !important',
@@ -114,7 +135,8 @@ function App() {
   return (
     <div className="App">
       <GlobalCss />
-      <div style={{ margin: '0px 12px' }}>
+      <MuiPickersUtilsProvider utils={DateFnsUtils}>
+        <div style={{ margin: '0px 12px' }}>
         <Header>
           <Typography variant="h6">Restaurant Booking</Typography>
         </Header>
@@ -129,7 +151,8 @@ function App() {
           {currentPath === '/' && <HomePage />}
           {currentPath === '/form' && <BookingForm />}
         </AppContext.Provider>}
-      </div>
+        </div>
+      </MuiPickersUtilsProvider>
     </div>
   );
 }
