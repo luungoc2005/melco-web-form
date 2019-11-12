@@ -63,7 +63,11 @@ export const HomePage = () => {
     <>
       <RestaurantBanner restaurantData={restaurantData} />
       {restaurantSetup && <>
-      <Section title='Guests' style={{ textAlign: 'center' }}>
+      <Section 
+        title='Guests' 
+        className='noScrollBar' 
+        style={{ textAlign: 'center', width: '100%', overflowX: 'scroll', whiteSpace: 'nowrap' }}
+      >
         {_range(minOnlinePartySize, maxOnlinePartySize).map((value) => 
         <ToggleButton 
           key={value}
@@ -78,7 +82,11 @@ export const HomePage = () => {
           {value}
         </ToggleButton>)}
       </Section>
-      <Section title='Dates' style={{ textAlign: 'center' }}>
+      <Section 
+        title='Dates' 
+        className='noScrollBar' 
+        style={{ textAlign: 'center', width: '100%', overflowX: 'scroll', whiteSpace: 'nowrap' }}
+      >
         {_range(0, Math.min(DEFAULT_SHOWN_DATES, acceptBookingsDaysInAdvance)).map((value) => {
           const dateValue = getDateButton(value);
           return <ToggleButton
@@ -127,7 +135,11 @@ export const HomePage = () => {
           </ToggleButton>
         </>}
       </Section>
-      <Section title='Time' style={{ textAlign: 'center' }}>
+      <Section 
+        title='Time' 
+        className='noScrollBar' 
+        style={{ textAlign: 'center', width: '100%', overflowX: 'scroll', whiteSpace: 'nowrap' }}
+      >
         {timeRangesLoading && <CircularProgress />}
         {Array.isArray(timeRanges) && (timeRanges.length
         ? timeRanges.map((value) => <ToggleButton

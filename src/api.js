@@ -8,12 +8,8 @@ const BOTBOT_API_URL = 'https://melcomanilatesting.azurewebsites.net'
 export const getSearchParams = () => parse(window.location.search.substring(1))
 
 export const RestaurantAPI = {
-  getRestaurant: ({ micrositeId }) => axios.get(`${MELCO_APP_API_URL}/content/v1/restaurants/${micrositeId}`),
-  getOnlineBookingSetup: ({ micrositeId }) => axios.get(`${MELCO_SERVICE_API_URL}/v1/restaurants/${micrositeId}/setup`, {
-    headers: {
-      'Accept-Language': 'en-US'
-    }
-  }),
+  getRestaurant: ({ micrositeId }) => axios.get(`${BOTBOT_API_URL}/api/restaurant/${micrositeId}/content`),
+  getOnlineBookingSetup: ({ micrositeId }) => axios.get(`${BOTBOT_API_URL}/api/restaurant/${micrositeId}/setup`),
   getRestaurantAvailability: ({ micrositeId, partySize, visitDate }) => 
     axios.get(`${MELCO_SERVICE_API_URL}/v1/restaurants/${micrositeId}/availabilitySearch?${stringify({ partySize, visitDate })}`),
   bookRestaurant: ({ params, data }) => 

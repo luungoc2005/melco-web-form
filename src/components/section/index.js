@@ -2,16 +2,21 @@ import React from 'react';
 
 import Typography from '@material-ui/core/Typography';
 
-export const Section = ({ title, children, style = {}, underline = false }) => {
+export const Section = ({ title, children, style = {}, className, underline = false }) => {
   return (<>
-  <div style={{ margin: '20px 0' }}>
+  <div style={{ marginTop: 20, marginBottom: 5 }}>
     <Typography variant="h5">
       {title}
     </Typography>
-    <div style={{ 
-      minHeight: 20,
-      marginTop: 12,
-      ...style }}>
+    <div 
+      style={{ 
+        minHeight: 20,
+        marginTop: 12,
+        paddingBottom: 20,
+        ...style 
+      }}
+      className={className}
+    >
       {children}
     </div>
   </div>

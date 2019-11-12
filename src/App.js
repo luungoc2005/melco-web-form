@@ -103,6 +103,10 @@ const GlobalCss = withStyles({
       color: PRIMARY_COLOR,
       fontSize: '1.1rem !important',
     },
+    
+    '.noScrollBar::-webkit-scrollbar': {
+      display: 'none'
+    }
   },
 })(() => null);
 
