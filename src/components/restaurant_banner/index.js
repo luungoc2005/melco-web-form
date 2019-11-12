@@ -13,9 +13,9 @@ export const RestaurantBanner = ({ restaurantData }) => {
       <Typography variant="h5" style={{ marginBottom: 24 }}>
         {property}
       </Typography>
-      {addressShort && <div>
+      {addressShort && <div style={{ marginBottom: 6 }}>
         <Typography variant="body2">
-          <Icon style={{ color: SECONDARY_COLOR, marginRight: 12, marginBottom: 12 }}>map</Icon>
+          <Icon style={{ color: SECONDARY_COLOR, marginRight: 12 }}>map</Icon>
           {addressShort}
         </Typography>
       </div>}
