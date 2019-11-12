@@ -21,6 +21,8 @@ export const AppContext = createContext({
   restaurantSetup: null,
   formData: DEFAULT_FORM_DATA,
   setFormData: () => {},
+  timeRanges: null,
+  timeRangesLoading: false,
 })
 
 export default AppContext;

@@ -10,6 +10,7 @@ import Typography from '@material-ui/core/Typography';
 import { MuiPickersUtilsProvider } from '@material-ui/pickers';
 import { withStyles, makeStyles } from '@material-ui/core/styles';
 
+import _format from 'date-fns/format';
 import DateFnsUtils from '@date-io/date-fns';
 
 export const PRIMARY_COLOR = '#002B49'
@@ -25,7 +26,9 @@ const GlobalCss = withStyles({
     '.MuiIconButton-root': {
       color: SECONDARY_COLOR,
     },
-
+    '.MuiIconButton-root.secondary': {
+      color: '#666',
+    },
     '.MuiButton-containedPrimary': {
       backgroundColor: SECONDARY_COLOR,
     },
@@ -108,6 +111,8 @@ function App() {
   const [restaurantSetup, setRestaurantSetup] = useState({});
   const [currentPath, setCurrentPath] = useState('/');
   const [formData, setFormData] = useState(DEFAULT_FORM_DATA)
+  const [timeRanges, setTimeRanges] = useState(null);
+  const [timeRangesLoading, setTimeRangesLoading] = useState(false);
 
   useEffect(() => {
     console.log(getSearchParams())
@@ -131,22 +136,54 @@ function App() {
     fetchRestaurantData();
     fetchRestaurantSetup();
   }, [])
+  useEffect(() => {
+    console.log(getSearchParams())
+    async function fetchData() {
+      setTimeRanges(null);
+      setTimeRangesLoading(true);
+      setFormData({...formData, visitTime: ''});
+
+      const { micrositeId } = getSearchParams();
+      const resp = await RestaurantAPI.getRestaurantAvailability({ 
+        micrositeId,
+        partySize: formData.partySize,
+        visitDate: _format(formData.visitDate, 'yyyy-MM-d')
+      });
+
+      setTimeRanges(resp.data || []);
+      setTimeRangesLoading(false);
+    }
+    fetchData();
+  }, [formData.visitDate, formData.partySize])
+
+  const navigate = (path) => {
+    setCurrentPath(path)
+    window.scrollTo(0, 0)
+  }
 
   return (
     <div className="App">
       <GlobalCss />
       <MuiPickersUtilsProvider utils={DateFnsUtils}>
         <div style={{ margin: '0px 12px' }}>
-        <Header>
-          <Typography variant="h6">Restaurant Booking</Typography>
+        <Header
+          onBackButtonClick={
+            currentPath === '/'
+            ? undefined
+            : () => navigate('/')
+          }
+        >
+          <Typography variant="h6" style={{ textAlign: 'center' }}>Restaurant Booking</Typography>
         </Header>
         {AppContext && <AppContext.Provider value={{
           currentPath,
-          setCurrentPath,
+          setCurrentPath: navigate,
           restaurantData,
           restaurantSetup,
           formData,
           setFormData,
+          timeRanges,
+          timeRangesLoading,
         }}>
           {currentPath === '/' && <HomePage />}
           {currentPath === '/form' && <BookingForm />}

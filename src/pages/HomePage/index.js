@@ -31,33 +31,20 @@ const useStyles = makeStyles(theme => ({
 
 export const HomePage = () => {
   const classes = useStyles();
-  const { restaurantData, restaurantSetup, formData, setFormData, setCurrentPath } = useContext(AppContext) || {};
-  const [timeRanges, setTimeRanges] = useState(null);
-  const [timeRangesLoading, setTimeRangesLoading] = useState(false);
+  const { 
+    restaurantData, 
+    restaurantSetup, 
+    formData, 
+    setFormData, 
+    setCurrentPath,
+    timeRanges,
+    timeRangesLoading,
+  } = useContext(AppContext) || {};
   const { minOnlinePartySize, maxOnlinePartySize, acceptBookingsDaysInAdvance } = restaurantSetup;
   const inputRef = useRef();
   const today = new Date();
   const DEFAULT_SHOWN_DATES = 5;
   const otherDateSelected = _differenceInHours(_addDays(today, DEFAULT_SHOWN_DATES - 1), formData.visitDate) < 0
-  useEffect(() => {
-    console.log(getSearchParams())
-    async function fetchData() {
-      setTimeRanges(null);
-      setTimeRangesLoading(true);
-      setFormData({...formData, visitTime: ''});
-
-      const { micrositeId } = getSearchParams();
-      const resp = await RestaurantAPI.getRestaurantAvailability({ 
-        micrositeId,
-        partySize: formData.partySize,
-        visitDate: _format(formData.visitDate, 'yyyy-MM-d')
-      });
-
-      setTimeRanges(resp.data || []);
-      setTimeRangesLoading(false);
-    }
-    fetchData();
-  }, [formData.visitDate, formData.partySize])
 
   const getDateButton = (daysFromNow) => {
     const retDay = _addDays(today, daysFromNow);

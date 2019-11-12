@@ -7,6 +7,7 @@ import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import IconButton from '@material-ui/core/IconButton';
 import CloseIcon from '@material-ui/icons/Close';
+import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -14,13 +15,25 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-export const Header = ({ children }) => {
+export const Header = ({ children, onBackButtonClick }) => {
   const classes = useStyles();
 
   return (
     <div className={classes.root}>
       <AppBar position="static" elevation={0} style={{ padding: 12 }}>
         <Toolbar variant="dense">
+          {onBackButtonClick && <IconButton
+            edge="start"
+            aria-label="back"
+            aria-haspopup="true"
+            onClick={onBackButtonClick}
+            style={{ flex: 0 }}
+            color="seoncdary"
+            className="secondary"
+          >
+            <ArrowBackIcon />
+          </IconButton>}
+
           <div style={{ flex: 1 }}>
             {children}
           </div>
