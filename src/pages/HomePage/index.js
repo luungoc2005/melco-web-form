@@ -22,6 +22,7 @@ import _addDays from 'date-fns/addDays';
 import _format from 'date-fns/format';
 import _parse from 'date-fns/parse';
 import _differenceInHours from 'date-fns/differenceInHours';
+import { Typography } from '@material-ui/core';
 
 const DAYS_OF_WEEK = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat']
 const useStyles = makeStyles(theme => ({
@@ -158,8 +159,8 @@ export const HomePage = () => {
         </ToggleButton>)
         : timeRanges.length === 0 && <>
           <Icon>sentiment_dissatisfied</Icon>
-          <div>There are no available time slots for this date.</div>
-          <div>Please try another one.</div>
+          <Typography variant="body2">There are no available time slots for this date.</Typography>
+          <Typography variant="body2">Please try another one.</Typography>
         </>)}
       </Section>
 
