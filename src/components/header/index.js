@@ -28,7 +28,7 @@ export const Header = ({ children, onBackButtonClick }) => {
             aria-haspopup="true"
             onClick={onBackButtonClick}
             style={{ flex: 0 }}
-            color="seoncdary"
+            color="secondary"
             className="secondary"
           >
             <ArrowBackIcon />

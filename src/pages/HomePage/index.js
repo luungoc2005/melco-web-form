@@ -15,6 +15,8 @@ import { DatePicker } from "@material-ui/pickers";
 // import ToggleButtonGroup from '@material-ui/lab/ToggleButtonGroup';
 // import Typography from '@material-ui/core/Typography';
 
+import { formatTime } from '../../utils';
+
 import _range from 'lodash/range';
 import _addDays from 'date-fns/addDays';
 import _format from 'date-fns/format';
@@ -127,7 +129,7 @@ export const HomePage = () => {
             className={classes.buttonNoTransform}
           >
             {!otherDateSelected 
-            ? <Icon style={{ color: SECONDARY_COLOR }}>calendar_today</Icon>
+            ? <Icon style={{ color: SECONDARY_COLOR, fontSize: '1.5em' }}>calendar_today</Icon>
             : <div>
               <strong>{_format(formData.visitDate, 'd MMM')}</strong>
               <div>{DAYS_OF_WEEK[formData.visitDate.getDay()]}</div>
@@ -150,9 +152,9 @@ export const HomePage = () => {
           selected={formData.visitTime === value}
           aria-label={value}
           onChange={() => setFormData({...formData, visitTime: value})}
-          style={{ marginRight: 10, marginTop: 10, padding: '0 32px' }}
+          style={{ marginRight: 10, marginTop: 10, padding: '0 32px', textTransform: 'none' }}
         >
-          {value}
+          {formatTime(value)}
         </ToggleButton>)
         : timeRanges.length === 0 && <>
           <Icon>sentiment_dissatisfied</Icon>

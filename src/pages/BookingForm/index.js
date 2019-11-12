@@ -21,6 +21,8 @@ import MuiPhoneNumber from 'material-ui-phone-number';
 
 import _format from 'date-fns/format';
 
+import { formatTime } from '../../utils';
+
 const useStyles = makeStyles(theme => ({
   buttonNoTransform: {
     textTransform: 'none',
@@ -77,19 +79,19 @@ export const BookingForm = () => {
         underline={true}
       >
         <div style={{ flex: 1 }}>
-          <Typography variant="body1">
+          <Typography variant="body2">
             <Icon style={{ color: SECONDARY_COLOR, marginRight: 12 }}>calendar_today</Icon>
             {_format(formData.visitDate, 'd MMM (iii)')}
           </Typography>
         </div>
         <div style={{ flex: 1 }}>
-          <Typography variant="body1">
+          <Typography variant="body2">
             <Icon style={{ color: SECONDARY_COLOR, marginRight: 12 }}>access_time</Icon>
-            {formData.visitTime}
+            {formatTime(formData.visitTime)}
           </Typography>
         </div>
         <div style={{ flex: 1 }}>
-          <Typography variant="body1">
+          <Typography variant="body2">
             <Icon style={{ color: SECONDARY_COLOR, marginRight: 12 }}>person</Icon>
             {`${formData.partySize} guest${formData.partySize > 1 ? 's' : ''}`}
           </Typography>

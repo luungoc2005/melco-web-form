@@ -18,6 +18,10 @@ export const SECONDARY_COLOR = '#B58D3D'
 
 const GlobalCss = withStyles({
   '@global': {
+    '.MuiTypography-root': {
+      fontFamily: '"Relative", serif',
+    },
+
     '.MuiAppBar-colorPrimary': {
       backgroundColor: 'white',
       color: PRIMARY_COLOR,
@@ -29,6 +33,9 @@ const GlobalCss = withStyles({
     '.MuiIconButton-root.secondary': {
       color: '#666',
     },
+    '.MuiButton-root': {
+      fontFamily: '"Relative", serif',
+    },
     '.MuiButton-containedPrimary': {
       backgroundColor: SECONDARY_COLOR,
     },
@@ -37,6 +44,7 @@ const GlobalCss = withStyles({
     },
 
     '.MuiToggleButton-root': {
+      fontFamily: '"Relative", serif',
       color: '#333',
     },
     '.MuiToggleButton-root.Mui-selected:hover': {
@@ -102,6 +110,10 @@ const GlobalCss = withStyles({
     'h5': {
       color: PRIMARY_COLOR,
       fontSize: '1.1rem !important',
+    },
+
+    '.MuiIcon-root': {
+      fontSize: 'inherit',
     },
     
     '.noScrollBar::-webkit-scrollbar': {
@@ -177,7 +189,7 @@ function App() {
             : () => navigate('/')
           }
         >
-          <Typography variant="h6" style={{ textAlign: 'center' }}>Restaurant Booking</Typography>
+          <Typography variant="h6" style={{ textAlign: 'center', userSelect: 'none' }}>Restaurant Booking</Typography>
         </Header>
         {AppContext && <AppContext.Provider value={{
           currentPath,
