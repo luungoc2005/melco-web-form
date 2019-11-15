@@ -2,8 +2,6 @@ import React, { useContext } from 'react';
 
 import { PRIMARY_COLOR, SECONDARY_COLOR } from '../../App';
 
-import { getSearchParams, RestaurantAPI } from '../../api';
-
 import { AppContext } from '../../context';
 import { RestaurantBanner } from '../../components/restaurant_banner';
 import { Section } from '../../components/section';
@@ -34,39 +32,16 @@ const useStyles = makeStyles(theme => ({
 
 export const BookingForm = () => {
   const classes = useStyles();
-  const { restaurantData, restaurantSetup, formData, setFormData } = useContext(AppContext) || {};
+  const { 
+    restaurantData, 
+    formData, 
+    setFormData,
+    setCurrentPath,
+  } = useContext(AppContext) || {};
   const { bookingReasons } = formData;
 
-  const handleSubmit = async () => {
-    const { micrositeId, ...params } = getSearchParams();
-    console.log(params)
-    const dialCode = formData.country.dialCode.toString();
-    let mobile = formData.phoneNumber;
-    const dialCodeIdx = mobile.indexOf(dialCode);
-    if (dialCodeIdx > -1) {
-      mobile = mobile.substring(dialCodeIdx + dialCode.length).trim();
-    }
-
-    const requestData = {
-      micrositeName: micrositeId,
-      visitDate: _format(formData.visitDate, 'yyyy-MM-d'),
-      visitTime: formData.visitTime,
-      partySize: formData.partySize,
-      specialRequests: formData.specialRequests,
-      bookingReasonIds: formData.bookingReasons
-        .filter(item => item.checked)
-        .map(item => item.id),
-      customer: {
-        title: formData.title,
-        firstName: formData.firstName,
-        surname: formData.lastName,
-        mobileCountryCode: formData.country.dialCode,
-        mobile
-      }
-    }
-
-    await RestaurantAPI.bookRestaurant({ params, data: requestData })
-    window.close();
+  const handleSubmit = () => {
+    setCurrentPath('/complete');
   }
 
   return (

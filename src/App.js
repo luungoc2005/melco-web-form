@@ -4,6 +4,7 @@ import { getSearchParams, RestaurantAPI } from './api';
 
 import { HomePage } from './pages/HomePage';
 import { BookingForm } from './pages/BookingForm';
+import { BookingComplete } from './pages/BookingComplete';
 
 import { Header } from './components/header';
 import Typography from '@material-ui/core/Typography';
@@ -129,6 +130,8 @@ function App() {
   const [formData, setFormData] = useState(DEFAULT_FORM_DATA)
   const [timeRanges, setTimeRanges] = useState(null);
   const [timeRangesLoading, setTimeRangesLoading] = useState(false);
+  const [bookingLoading, setBookingLoading] = useState(false);
+  const [bookingError, setBookingError] = useState(false);
 
   useEffect(() => {
     console.log(getSearchParams())
@@ -182,7 +185,7 @@ function App() {
       <GlobalCss />
       <MuiPickersUtilsProvider utils={DateFnsUtils}>
         <div style={{ margin: '0px 12px' }}>
-        <Header
+        {/* <Header
           onBackButtonClick={
             currentPath === '/'
             ? undefined
@@ -190,7 +193,7 @@ function App() {
           }
         >
           <Typography variant="h6" style={{ textAlign: 'center', userSelect: 'none' }}>Restaurant Booking</Typography>
-        </Header>
+        </Header> */}
         {AppContext && <AppContext.Provider value={{
           currentPath,
           setCurrentPath: navigate,
@@ -200,9 +203,14 @@ function App() {
           setFormData,
           timeRanges,
           timeRangesLoading,
+          bookingLoading,
+          setBookingLoading,
+          bookingError,
+          setBookingError,
         }}>
           {currentPath === '/' && <HomePage />}
           {currentPath === '/form' && <BookingForm />}
+          {currentPath === '/complete' && <BookingComplete />}
         </AppContext.Provider>}
         </div>
       </MuiPickersUtilsProvider>

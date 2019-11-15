@@ -23,6 +23,10 @@ export const AppContext = createContext({
   setFormData: () => {},
   timeRanges: null,
   timeRangesLoading: false,
+  bookingLoading: false,
+  setBookingLoading: () => {},
+  bookingError: false,
+  setBookingError: () => {},
 })
 
 export default AppContext;
