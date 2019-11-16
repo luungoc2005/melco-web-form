@@ -132,6 +132,7 @@ function App() {
   const [timeRangesLoading, setTimeRangesLoading] = useState(false);
   const [bookingLoading, setBookingLoading] = useState(false);
   const [bookingError, setBookingError] = useState(false);
+  const [windowCloseError, setWindowCloseError] = useState(false);
 
   useEffect(() => {
     console.log(getSearchParams())
@@ -207,6 +208,8 @@ function App() {
           setBookingLoading,
           bookingError,
           setBookingError,
+          windowCloseError,
+          setWindowCloseError,
         }}>
           {currentPath === '/' && <HomePage />}
           {currentPath === '/form' && <BookingForm />}

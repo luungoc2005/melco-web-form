@@ -4,6 +4,7 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 import Typography from '@material-ui/core/Typography';
 
 import { getSearchParams, RestaurantAPI } from '../../api';
+import { _messengerExtensions } from '../../index';
 
 import { AppContext } from '../../context';
 
@@ -16,6 +17,8 @@ export const BookingComplete = () => {
     setBookingLoading,
     bookingError,
     setBookingError,
+    windowCloseError,
+    setWindowCloseError,
   } = useContext(AppContext) || {};
   const { bookingReasons } = formData;
 
@@ -48,7 +51,7 @@ export const BookingComplete = () => {
           firstName: formData.firstName,
           surname: formData.lastName,
           mobileCountryCode: formData.country.dialCode,
-          mobile
+          mobile,
         }
       }
       
@@ -61,7 +64,17 @@ export const BookingComplete = () => {
       }
   
       setBookingLoading(false);
-      window.close();
+
+      if (_messengerExtensions && _messengerExtensions.requestCloseBrowser) {
+        _messengerExtensions.requestCloseBrowser(function success() {
+            console.log("Webview closing");
+        }, function error(err) {
+          setWindowCloseError(err);
+        });
+      }
+      else {
+        window.close();
+      }
     }
     submitBooking();
   }, [])
@@ -81,6 +94,8 @@ export const BookingComplete = () => {
     : <>
       <Typography variant="body1">Your booking is complete</Typography>
       <Typography variant="body2">Please click the Back button to go back to the chat.</Typography>  
+      {windowCloseError && 
+        <Typography variant="caption">{windowCloseError}</Typography>}
     </>}
   </div>)
 }

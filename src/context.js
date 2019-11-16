@@ -27,6 +27,8 @@ export const AppContext = createContext({
   setBookingLoading: () => {},
   bookingError: false,
   setBookingError: () => {},
+  windowCloseError: false,
+  setWindowCloseError: () => {},
 })
 
 export default AppContext;
