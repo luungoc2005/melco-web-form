@@ -75,6 +75,7 @@ export const BookingComplete = () => {
       else {
         window.close();
       }
+      setWindowCloseError(_messengerExtensions);
     }
     submitBooking();
   }, [])
@@ -94,8 +95,7 @@ export const BookingComplete = () => {
     : <>
       <Typography variant="body1">Your booking is complete</Typography>
       <Typography variant="body2">Please click the Back button to go back to the chat.</Typography>  
-      {windowCloseError && 
-        <Typography variant="caption">{windowCloseError}</Typography>}
+      <Typography variant="caption">MessengerExtensions?: {windowCloseError}</Typography>
     </>}
   </div>)
 }

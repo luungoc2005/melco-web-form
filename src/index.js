@@ -21,24 +21,6 @@ export let _messengerExtensions = null;
 window.extAsyncInit = function () {
   ReactDOM.render(<App />, document.getElementById('root'));
   _messengerExtensions = window.MessengerExtensions
-
-  if (_messengerExtensions) {
-    _messengerExtensions.getSupportedFeatures(function success(result) {
-      let features = result.supported_features;
-      if (features.indexOf("context") != -1) {
-        _messengerExtensions.getContext('2417495391665520',
-          function success(thread_context) {
-            document.getElementById("psid").value = thread_context.psid;
-          },
-          function error(err) {
-            console.log(err);
-          }
-        );
-      }
-    }, function error(err) {
-      console.log(err);
-    });
-  }
 };
 
 // If you want your app to work offline and load faster, you can change
