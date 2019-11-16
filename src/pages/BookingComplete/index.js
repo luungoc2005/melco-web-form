@@ -33,7 +33,7 @@ export const BookingComplete = () => {
       if (dialCodeIdx > -1) {
         mobile = mobile.substring(dialCodeIdx + dialCode.length).trim();
       }
-  
+      
       const requestData = {
         micrositeName: micrositeId,
         visitDate: _format(formData.visitDate, 'yyyy-MM-d'),
@@ -56,6 +56,7 @@ export const BookingComplete = () => {
         await RestaurantAPI.bookRestaurant({ params, data: requestData });
       }
       catch (e) {
+        setBookingLoading(false);
         setBookingError(e);
       }
   
@@ -66,7 +67,13 @@ export const BookingComplete = () => {
   }, [])
 
   return (<div style={{ textAlign: 'center' }}>
-    {bookingLoading
+    {bookingError 
+    ? <>
+      <Typography variant="body1">Your booking is not complete</Typography>
+      <Typography variant="body2" gutterBottom>An error orcurred. Please click the Back button and try again.</Typography>
+      <Typography variant="caption">{bookingError}</Typography>
+    </>
+    : bookingLoading
     ? <>
       <CircularProgress />
       <Typography variant="body2">Please wait...</Typography>
