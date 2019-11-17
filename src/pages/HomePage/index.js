@@ -1,4 +1,4 @@
-import React, { useContext, useState, useEffect, useRef } from 'react';
+import React, { useContext, useRef } from 'react';
 
 import { PRIMARY_COLOR, SECONDARY_COLOR } from '../../App';
 import { getSearchParams, RestaurantAPI } from '../../api';
@@ -69,7 +69,13 @@ export const HomePage = () => {
       <Section 
         title='Guests' 
         className='noScrollBar' 
-        style={{ textAlign: 'center', width: '100%', overflowX: 'scroll', whiteSpace: 'nowrap' }}
+        style={{ 
+          textAlign: 'center', 
+          width: '100%',
+          whiteSpace: 'nowrap',
+          position: 'relative',
+        }}
+        enableScroll={true}
       >
         {_range(minOnlinePartySize, maxOnlinePartySize).map((value) => 
         <ToggleButton 
@@ -88,7 +94,13 @@ export const HomePage = () => {
       <Section 
         title='Dates' 
         className='noScrollBar' 
-        style={{ textAlign: 'center', width: '100%', overflowX: 'scroll', whiteSpace: 'nowrap' }}
+        style={{ 
+          textAlign: 'center', 
+          width: '100%',
+          whiteSpace: 'nowrap',
+          position: 'relative',
+        }}
+        enableScroll={true}
       >
         {_range(0, Math.min(DEFAULT_SHOWN_DATES, acceptBookingsDaysInAdvance)).map((value) => {
           const dateValue = getDateButton(value);
@@ -141,7 +153,13 @@ export const HomePage = () => {
       <Section 
         title='Time' 
         className='noScrollBar' 
-        style={{ textAlign: 'center', width: '100%', overflowX: 'scroll', whiteSpace: 'nowrap' }}
+        style={{ 
+          textAlign: 'center', 
+          width: '100%',
+          whiteSpace: 'nowrap',
+          position: 'relative',
+        }}
+        enableScroll={true}
       >
         {timeRangesLoading && <CircularProgress />}
         {Array.isArray(timeRanges) && (timeRanges.length

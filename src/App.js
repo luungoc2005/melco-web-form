@@ -34,6 +34,7 @@ const GlobalCss = withStyles({
     '.MuiIconButton-root.secondary': {
       color: '#666',
     },
+
     '.MuiButton-root': {
       fontFamily: '"Relative", serif',
     },
@@ -42,6 +43,12 @@ const GlobalCss = withStyles({
     },
     '.MuiButton-containedPrimary:hover': {
       backgroundColor: SECONDARY_COLOR,
+    },
+    '.MuiButton-textSecondary': {
+      color: '#333',
+    },
+    '.MuiButton-textSecondary:hover': {
+      backgroundColor: 'rgba(0, 0, 0, 0.08)',
     },
 
     '.MuiToggleButton-root': {
@@ -185,7 +192,7 @@ function App() {
     <div className="App">
       <GlobalCss />
       <MuiPickersUtilsProvider utils={DateFnsUtils}>
-        <div style={{ margin: '0px 12px' }}>
+        <div style={{ margin: '0px 24px' }}>
         {/* <Header
           onBackButtonClick={
             currentPath === '/'

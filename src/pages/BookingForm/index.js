@@ -171,21 +171,31 @@ export const BookingForm = () => {
         />)}
       </Section>
 
-      <Button
-        color="primary"
-        fullWidth
-        variant="contained"
-        disabled={
-          formData.firstName.trim() === '' ||
-          formData.lastName.trim() === '' ||
-          formData.phoneNumber.trim() === '' ||
-          formData.email.trim() === ''
-        }
-        onClick={handleSubmit}
-      >
-        Book
-      </Button>
-      
+      <div style={{ display: 'flex' }}>
+        <Button
+          color="secondary"
+          onClick={() => setCurrentPath('/')}
+          style={{ flex: 0, marginRight: 12 }}
+        >
+          <Icon>navigate_before</Icon>
+          Back
+        </Button>
+        <Button
+          color="primary"
+          fullWidth
+          variant="contained"
+          disabled={
+            formData.firstName.trim() === '' ||
+            formData.lastName.trim() === '' ||
+            formData.phoneNumber.trim() === '' ||
+            formData.email.trim() === ''
+          }
+          onClick={handleSubmit}
+          style={{ flex: 1 }}
+        >
+          Book
+        </Button>
+      </div>
     </>
   )
 }

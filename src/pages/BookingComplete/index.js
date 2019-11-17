@@ -65,20 +65,27 @@ export const BookingComplete = () => {
   
       setBookingLoading(false);
 
-      if (_messengerExtensions && _messengerExtensions.requestCloseBrowser) {
-        _messengerExtensions.requestCloseBrowser(function success() {
-            console.log("Webview closing");
-        }, function error(err) {
-          setWindowCloseError(err);
-        });
-      }
-      else {
+      try {
+        setWindowCloseError(_messengerExtensions);
+
+        if (_messengerExtensions && _messengerExtensions.requestCloseBrowser) {
+          _messengerExtensions.requestCloseBrowser(
+            function success() {
+              console.log("Webview closing");
+            },
+            function error(err) {
+              setWindowCloseError(err);
+            });
+        }
+
         window.close();
       }
-      setWindowCloseError(_messengerExtensions);
+      catch (we) {
+        setWindowCloseError(we);
+      }
     }
     submitBooking();
-  }, [])
+  })
 
   return (<div style={{ textAlign: 'center' }}>
     {bookingError 
@@ -95,8 +102,9 @@ export const BookingComplete = () => {
     : <>
       <Typography variant="body1">Your booking is complete</Typography>
       <Typography variant="body2">Please click the Back button to go back to the chat.</Typography>  
-      <Typography variant="caption">MessengerExtensions?: {windowCloseError}</Typography>
     </>}
+    {/* <Typography variant="caption">MessengerExtensions?: {windowCloseError && windowCloseError.toSource ? windowCloseError.toSource() : Object.prototype.toString.call(windowCloseError)}</Typography>
+    <Typography variant="caption">window.name == {window.name}</Typography> */}
   </div>)
 }
 
