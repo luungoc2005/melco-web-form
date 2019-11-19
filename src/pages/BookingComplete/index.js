@@ -59,7 +59,10 @@ export const BookingComplete = () => {
       }
       catch (e) {
         setBookingLoading(false);
-        setBookingError(e);
+        setBookingError(e && e.message 
+          ? e.message 
+          : 'Unknown error'
+        );
       }
   
       setBookingLoading(false);
