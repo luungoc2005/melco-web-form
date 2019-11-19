@@ -20,7 +20,6 @@ export const BookingComplete = () => {
     windowCloseError,
     setWindowCloseError,
   } = useContext(AppContext) || {};
-  const { bookingReasons } = formData;
 
   useEffect(() => {
     const submitBooking = async () => {
@@ -85,7 +84,7 @@ export const BookingComplete = () => {
       }
     }
     submitBooking();
-  })
+  }, [])
 
   return (<div style={{ textAlign: 'center' }}>
     {bookingError 

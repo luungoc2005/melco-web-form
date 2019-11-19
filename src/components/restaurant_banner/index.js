@@ -13,16 +13,16 @@ export const RestaurantBanner = ({ restaurantData }) => {
       <Typography variant="h5" style={{ marginBottom: 24 }}>
         {property}
       </Typography>
-      {addressShort && <div style={{ marginBottom: 6 }}>
-        <Typography variant="body2">
-          <Icon style={{ color: SECONDARY_COLOR, marginRight: 12 }}>map</Icon>
-          {addressShort}
-        </Typography>
-      </div>}
-      {phone && <div style={{ color: SECONDARY_COLOR, }}>
+      {phone && <div style={{ color: SECONDARY_COLOR, marginBottom: 6 }}>
         <Typography variant="body2">
           <Icon style={{ marginRight: 12 }}>call</Icon>
           {phone}
+        </Typography>
+      </div>}
+      {addressShort && <div>
+        <Typography variant="body2">
+          <Icon style={{ color: SECONDARY_COLOR, marginRight: 12 }}>map</Icon>
+          {addressShort}
         </Typography>
       </div>}
     </div>
