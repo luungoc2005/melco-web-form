@@ -14,6 +14,10 @@ import { withStyles, makeStyles } from '@material-ui/core/styles';
 import _format from 'date-fns/format';
 import DateFnsUtils from '@date-io/date-fns';
 
+import {IntlProvider, FormattedMessage} from 'react-intl';
+
+import { messages } from './intl';
+
 export const PRIMARY_COLOR = '#002B49'
 export const SECONDARY_COLOR = '#B58D3D'
 
@@ -141,9 +145,12 @@ function App() {
   const [bookingError, setBookingError] = useState(false);
   const [windowCloseError, setWindowCloseError] = useState(false);
 
+  const { 
+    micrositeId,
+    language,
+  } = getSearchParams();
+
   useEffect(() => {
-    console.log(getSearchParams())
-    const { micrositeId } = getSearchParams();
     async function fetchRestaurantData() {
       if (micrositeId) {
         const resp = await RestaurantAPI.getRestaurant({ micrositeId })
@@ -170,7 +177,6 @@ function App() {
       setTimeRangesLoading(true);
       setFormData({...formData, visitTime: ''});
 
-      const { micrositeId } = getSearchParams();
       const resp = await RestaurantAPI.getRestaurantAvailability({ 
         micrositeId,
         partySize: formData.partySize,
@@ -188,7 +194,10 @@ function App() {
     window.scrollTo(0, 0)
   }
 
+  const locale = language || 'en-US'
+  
   return (
+    <IntlProvider locale={locale} messages={messages[locale]}>
     <div className="App">
       <GlobalCss />
       <MuiPickersUtilsProvider utils={DateFnsUtils}>
@@ -225,6 +234,7 @@ function App() {
         </div>
       </MuiPickersUtilsProvider>
     </div>
+    </IntlProvider>
   );
 }
 

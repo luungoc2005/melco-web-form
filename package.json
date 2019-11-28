@@ -15,6 +15,7 @@
     "material-ui-phone-number": "^2.2.2",
     "react": "^16.11.0",
     "react-dom": "^16.11.0",
+    "react-intl": "^3.7.0",
     "react-scripts": "3.2.0"
   },
   "scripts": {
@@ -37,5 +38,8 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "@babel/plugin-proposal-class-properties": "^7.7.4"
   }
 }

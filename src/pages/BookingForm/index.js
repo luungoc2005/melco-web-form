@@ -21,6 +21,9 @@ import _format from 'date-fns/format';
 
 import { formatTime } from '../../utils';
 
+import { useIntl, FormattedMessage } from 'react-intl';
+import { dateFnsLocales } from '../../intl';
+
 const useStyles = makeStyles(theme => ({
   buttonNoTransform: {
     textTransform: 'none',
@@ -38,6 +41,7 @@ export const BookingForm = () => {
     setFormData,
     setCurrentPath,
   } = useContext(AppContext) || {};
+  const intl = useIntl();
   const { bookingReasons } = formData;
 
   const handleSubmit = () => {
@@ -49,20 +53,28 @@ export const BookingForm = () => {
       <RestaurantBanner restaurantData={restaurantData} />
 
       <Section 
-        title='Booking Details' 
+        title={intl.formatMessage({ 
+          id: 'booking.section_details.title',
+          defaultMessage: 'Booking Details' ,
+        })}
         style={{ width: '100%', display: 'flex', alignItems: 'stretch' }}
         underline={true}
       >
         <div style={{ flex: 1 }}>
           <Typography variant="body2">
             <Icon style={{ color: SECONDARY_COLOR, marginRight: 12 }}>calendar_today</Icon>
-            {_format(formData.visitDate, 'd MMM (iii)')}
+            {_format(formData.visitDate, intl.formatMessage({ 
+                id: 'home.section_details.visit_date_format',
+                defaultMessage: 'd MMM (iii)',
+              }), {
+                locale: dateFnsLocales[intl.locale]
+              })}
           </Typography>
         </div>
         <div style={{ flex: 1 }}>
           <Typography variant="body2">
             <Icon style={{ color: SECONDARY_COLOR, marginRight: 12 }}>access_time</Icon>
-            {formatTime(formData.visitTime)}
+            {formatTime(formData.visitTime, intl)}
           </Typography>
         </div>
         <div style={{ flex: 1 }}>
@@ -73,7 +85,10 @@ export const BookingForm = () => {
         </div> 
       </Section>
 
-      <Section title='Contact Information'>
+      <Section title={intl.formatMessage({ 
+          id: 'booking.section_contact_information.title',
+          defaultMessage: 'Contact Information' ,
+        })}>
         <ToggleButtonGroup
           value={formData.title}
           exclusive
@@ -81,7 +96,20 @@ export const BookingForm = () => {
           aria-label="title"
           style={{ width: '100%', alignItems: 'stretch' }}
         >
-          {['Mr.', 'Ms.', 'Mrs.'].map((value) => <ToggleButton
+          {[
+            intl.formatMessage({ 
+              id: 'booking.section_contact_information.name_title_mr',
+              defaultMessage: 'Mr.',
+            }), 
+            intl.formatMessage({ 
+              id: 'booking.section_contact_information.name_title_ms',
+              defaultMessage: 'Ms.',
+            }), 
+            intl.formatMessage({ 
+              id: 'booking.section_contact_information.name_title_mrs',
+              defaultMessage: 'Mrs.',
+            })
+          ].map((value) => <ToggleButton
             key={value}
             value={value}
             className={classes.buttonNoTransform}
@@ -95,8 +123,14 @@ export const BookingForm = () => {
         <TextField
           required
           fullWidth
-          label="First Name"
-          placeholder="Enter your first name"
+          label={intl.formatMessage({ 
+            id: 'booking.section_contact_information.input_first_name',
+            defaultMessage: "First Name",
+          })}
+          placeholder={intl.formatMessage({ 
+            id: 'booking.section_contact_information.input_first_name_placeholder',
+            defaultMessage: "Enter your first name",
+          })}
           margin="normal"
           value={formData.firstName}
           onChange={(event) => setFormData({...formData, firstName: event.target.value})}
@@ -108,8 +142,14 @@ export const BookingForm = () => {
         <TextField
           required
           fullWidth
-          label="Last Name"
-          placeholder="Enter your last name"
+          label={intl.formatMessage({ 
+            id: 'booking.section_contact_information.input_last_name',
+            defaultMessage: "Last Name",
+          })}
+          placeholder={intl.formatMessage({ 
+            id: 'booking.section_contact_information.input_last_name_placeholder',
+            defaultMessage: "Enter your last name",
+          })}
           margin="normal"
           value={formData.lastName}
           onChange={(event) => setFormData({...formData, lastName: event.target.value})}
@@ -120,8 +160,14 @@ export const BookingForm = () => {
 
         <MuiPhoneNumber 
           required
-          label='Phone Number'
-          defaultCountry={'sg'}
+          label={intl.formatMessage({ 
+            id: 'booking.section_contact_information.input_phone_number',
+            defaultMessage: 'Phone Number',
+          })}
+          defaultCountry={intl.formatMessage({ 
+            id: 'booking.section_contact_information.input_phone_number_default_country',
+            defaultMessage: 'sg',
+          })}
           fullWidth
           margin="normal"
           onChange={(phoneNumber, country) => setFormData({...formData, country, phoneNumber})}
@@ -131,8 +177,14 @@ export const BookingForm = () => {
         <TextField
           required
           fullWidth
-          label="Email"
-          placeholder="Enter an email address"
+          label={intl.formatMessage({ 
+            id: 'booking.section_contact_information.input_email',
+            defaultMessage: "Email",
+          })}
+          placeholder={intl.formatMessage({ 
+            id: 'booking.section_contact_information.input_email_placeholder',
+            defaultMessage: "Enter an email address",
+          })}
           margin="normal"
           value={formData.email}
           inputProps={{
@@ -145,18 +197,27 @@ export const BookingForm = () => {
         />
       </Section>
 
-      <Section title='Special Requests'>
+      <Section title={intl.formatMessage({ 
+          id: 'booking.section_special_requests.title',
+          defaultMessage: 'Special Requests',
+        })}>
         <TextField
           required
           fullWidth
-          placeholder="Please enter special requests"
+          placeholder={intl.formatMessage({ 
+            id: 'booking.section_special_requests.input_special_requests',
+            defaultMessage: "Please enter special requests",
+          })}
           margin="normal"
           value={formData.specialRequests}
           onChange={(event) => setFormData({...formData, specialRequests: event.target.value})}
         /> 
       </Section>
 
-      <Section title='Special Occasions'>
+      <Section title={intl.formatMessage({ 
+          id: 'booking.section_special_occasions.title',
+          defaultMessage: 'Special Occasions',
+        })}>
         {bookingReasons && bookingReasons.map((value) => <Chip
           key={value.id}
           label={value.name}
@@ -178,7 +239,10 @@ export const BookingForm = () => {
           style={{ flex: 0, marginRight: 12 }}
         >
           <Icon>navigate_before</Icon>
-          Back
+          <FormattedMessage 
+            id="common.buttons.back"
+            defaultMessage="Back"
+          />
         </Button>
         <Button
           color="primary"
@@ -193,7 +257,10 @@ export const BookingForm = () => {
           onClick={handleSubmit}
           style={{ flex: 1 }}
         >
-          Book
+          <FormattedMessage 
+            id="common.buttons.book"
+            defaultMessage="Book"
+          />
         </Button>
       </div>
     </>
