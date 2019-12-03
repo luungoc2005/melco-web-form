@@ -10,6 +10,9 @@ import { AppContext } from '../../context';
 
 import _format from 'date-fns/format';
 
+import { useIntl, FormattedMessage } from 'react-intl';
+import { dateFnsLocales } from '../../intl';
+
 export const BookingComplete = () => {
   const { 
     formData, 
@@ -92,18 +95,43 @@ export const BookingComplete = () => {
   return (<div style={{ textAlign: 'center' }}>
     {bookingError 
     ? <>
-      <Typography variant="body1">Your booking is not complete</Typography>
-      <Typography variant="body2" gutterBottom>An error orcurred. Please click the Back button and try again.</Typography>
+      <Typography variant="body1">
+        <FormattedMessage 
+          id="booking_complete.booking_error.title"
+          defaultMessage="Your booking is not complete"
+        />
+      </Typography>
+      <Typography variant="body2" gutterBottom>
+        <FormattedMessage 
+          id="booking_complete.booking_error.message"
+          defaultMessage="An error orcurred. Please click the Back button and try again."
+        />
+      </Typography>
       <Typography variant="caption">{bookingError}</Typography>
     </>
     : bookingLoading
     ? <>
       <CircularProgress />
-      <Typography variant="body2">Please wait...</Typography>
+      <Typography variant="body2">
+        <FormattedMessage 
+          id="booking_complete.messages.wait"
+          defaultMessage="Please wait..."
+        />
+      </Typography>
     </>
     : <>
-      <Typography variant="body1">Your booking is complete</Typography>
-      <Typography variant="body2">Please click the Back button to go back to the chat.</Typography>  
+      <Typography variant="body1">
+        <FormattedMessage 
+          id="booking_complete.messages.complete_title"
+          defaultMessage="Your booking is complete"
+        />
+      </Typography>
+      <Typography variant="body2">
+        <FormattedMessage 
+          id="booking_complete.messages.complete_message"
+          defaultMessage="Please click the Back button to go back to the chat."
+        />
+      </Typography>  
     </>}
     {/* <Typography variant="caption">MessengerExtensions?: {windowCloseError && windowCloseError.toSource ? windowCloseError.toSource() : Object.prototype.toString.call(windowCloseError)}</Typography>
     <Typography variant="caption">window.name == {window.name}</Typography> */}

@@ -1,0 +1,34 @@
+[
+  {
+    "id": "common.time_format.am_text",
+    "defaultMessage": "am"
+  },
+  {
+    "id": "common.time_format.pm_text",
+    "defaultMessage": "pm"
+  },
+  {
+    "id": "common.time_format.time_format",
+    "defaultMessage": "{hours}:{minutes} {am_pm}"
+  },
+  {
+    "id": "home.date_button.today",
+    "defaultMessage": "Today"
+  },
+  {
+    "id": "home.date_button.tomorrow",
+    "defaultMessage": "Tomorrow"
+  },
+  {
+    "id": "home.section_guests.title",
+    "defaultMessage": "Guests"
+  },
+  {
+    "id": "home.section_dates.title",
+    "defaultMessage": "Dates"
+  },
+  {
+    "id": "home.section_dates.format",
+    "defaultMessage": "d MMM"
+  }
+]

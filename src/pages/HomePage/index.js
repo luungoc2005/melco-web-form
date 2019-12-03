@@ -1,4 +1,4 @@
-import React, { useContext, useRef } from 'react';
+import React, { useContext, useRef, useEffect } from 'react';
 
 import { PRIMARY_COLOR, SECONDARY_COLOR } from '../../App';
 import { getSearchParams, RestaurantAPI } from '../../api';
@@ -15,7 +15,10 @@ import { DatePicker } from "@material-ui/pickers";
 // import ToggleButtonGroup from '@material-ui/lab/ToggleButtonGroup';
 // import Typography from '@material-ui/core/Typography';
 
+import { dateFnsLocales } from '../../intl';
 import { formatTime } from '../../utils';
+
+import { useIntl, FormattedMessage } from 'react-intl';
 
 import _range from 'lodash/range';
 import _addDays from 'date-fns/addDays';
@@ -24,7 +27,6 @@ import _parse from 'date-fns/parse';
 import _differenceInHours from 'date-fns/differenceInHours';
 import { Typography } from '@material-ui/core';
 
-const DAYS_OF_WEEK = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat']
 const useStyles = makeStyles(theme => ({
   buttonNoTransform: {
     textTransform: 'none',
@@ -43,11 +45,19 @@ export const HomePage = () => {
     timeRanges,
     timeRangesLoading,
   } = useContext(AppContext) || {};
+  const intl = useIntl();
   const { minOnlinePartySize, maxOnlinePartySize, acceptBookingsDaysInAdvance } = restaurantSetup;
   const inputRef = useRef();
   const today = new Date();
   const DEFAULT_SHOWN_DATES = 5;
   const otherDateSelected = _differenceInHours(_addDays(today, DEFAULT_SHOWN_DATES - 1), formData.visitDate) < 0
+
+  useEffect(() => {
+    document.title = intl.formatMessage({ 
+      id: 'common.document.title',
+      defaultMessage: 'Restaurant Booking',
+    })
+  }, [])
 
   const getDateButton = (daysFromNow) => {
     const retDay = _addDays(today, daysFromNow);
@@ -55,10 +65,18 @@ export const HomePage = () => {
     return {
       value: retDay,
       label: daysFromNow === 0
-        ? 'Today'
+        ? intl.formatMessage({ 
+            id: 'home.date_button.today',
+            defaultMessage: 'Today',
+          })
         : daysFromNow === 1
-          ? 'Tomorrow'
-          : DAYS_OF_WEEK[retDay.getDay()]
+          ? intl.formatMessage({ 
+              id: 'home.date_button.tomorrow',
+              defaultMessage: 'Tomorrow'
+            })
+          : intl.formatDate(retDay, {
+            weekday: 'short'
+          })
     }
   }
 
@@ -67,7 +85,10 @@ export const HomePage = () => {
       <RestaurantBanner restaurantData={restaurantData} />
       {restaurantSetup && <>
       <Section 
-        title='Guests' 
+        title={intl.formatMessage({ 
+          id: 'home.section_guests.title',
+          defaultMessage: 'Guests',
+        })} 
         className='noScrollBar' 
         style={{ 
           textAlign: 'center', 
@@ -92,7 +113,10 @@ export const HomePage = () => {
         </ToggleButton>)}
       </Section>
       <Section 
-        title='Dates' 
+        title={intl.formatMessage({ 
+          id: 'home.section_dates.title',
+          defaultMessage: 'Dates',
+        })}
         className='noScrollBar' 
         style={{ 
           textAlign: 'center', 
@@ -116,14 +140,18 @@ export const HomePage = () => {
             variant="contained"
           >
             <div>
-              <strong>{_format(dateValue.value, 'd MMM')}</strong>
+              <strong>{_format(dateValue.value, intl.formatMessage({ 
+                id: 'home.section_dates.visit_date_format',
+                defaultMessage: 'd MMM',
+              }), {
+                locale: dateFnsLocales[intl.locale]
+              })}</strong>
               <div>{dateValue.label}</div>
             </div>
           </ToggleButton>
         })}
         {acceptBookingsDaysInAdvance > DEFAULT_SHOWN_DATES && <>
           <DatePicker
-            label="Basic example"
             animateYearScrolling
             inputRef={inputRef}
             style={{ display: 'none' }}
@@ -145,13 +173,18 @@ export const HomePage = () => {
             ? <Icon style={{ color: SECONDARY_COLOR, fontSize: '1.5em' }}>calendar_today</Icon>
             : <div>
               <strong>{_format(formData.visitDate, 'd MMM')}</strong>
-              <div>{DAYS_OF_WEEK[formData.visitDate.getDay()]}</div>
+              <div>{intl.formatDate(formData.visitDate, { 
+                weekday: 'short' 
+              })}</div>
             </div>}
           </ToggleButton>
         </>}
       </Section>
       <Section 
-        title='Time' 
+        title={intl.formatMessage({ 
+          id: 'home.section_time.title',
+          defaultMessage: 'Time' ,
+        })}
         className='noScrollBar' 
         style={{ 
           textAlign: 'center', 
@@ -173,12 +206,22 @@ export const HomePage = () => {
           onChange={() => setFormData({...formData, visitTime: value})}
           style={{ marginRight: 10, marginTop: 10, padding: '0 32px', textTransform: 'none' }}
         >
-          {formatTime(value)}
+          {formatTime(value, intl)}
         </ToggleButton>)
         : timeRanges.length === 0 && <>
           <Icon>sentiment_dissatisfied</Icon>
-          <Typography variant="body2">There are no available time slots for this date.</Typography>
-          <Typography variant="body2">Please try another one.</Typography>
+          <Typography variant="body2">
+            <FormattedMessage 
+              id="home.section_time.error_no_range_title"
+              defaultMessage="There are no available time slots for this date."
+            />
+          </Typography>
+          <Typography variant="body2">
+            <FormattedMessage 
+              id="home.section_time.error_no_range_message"
+              defaultMessage="Please try another one."
+            />
+          </Typography>
         </>)}
       </Section>
 
@@ -193,8 +236,11 @@ export const HomePage = () => {
           formData.visitTime === ''
         }
       >
-        Continue
-      </Button> 
+        <FormattedMessage 
+          id="common.buttons.continue"
+          defaultMessage="Continue"
+        />
+      </Button>
       </>}
     </>
   )
