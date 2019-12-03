@@ -98,7 +98,7 @@ export const HScroll = ({
     dest = Math.max(dest, 0);
     dest = Math.min(dest, scrollDiv.current.scrollWidth - scrollDiv.current.offsetWidth);
 
-    if (scrollLeft == dest) return;
+    if (scrollLeft === dest) return;
 
     //use proper easing curve when distance is small
     if (Math.abs(dest - scrollLeft) < 60) {
@@ -135,7 +135,7 @@ export const HScroll = ({
   }
 
   const scrollAmount = (direction) => {
-    if (scrollUnit == 'item') {
+    if (scrollUnit === 'item') {
       // TODO: this can be improved by finding the actual item in the viewport,
       // instead of the first item, because they may not have the same width.
       // the width of the li is measured on demand in case CSS has resized it

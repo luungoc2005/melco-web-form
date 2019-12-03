@@ -1,7 +1,7 @@
 import React, { useContext, useRef, useEffect } from 'react';
 
 import { PRIMARY_COLOR, SECONDARY_COLOR } from '../../App';
-import { getSearchParams, RestaurantAPI } from '../../api';
+// import { getSearchParams, RestaurantAPI } from '../../api';
 import { AppContext } from '../../context';
 import { RestaurantBanner } from '../../components/restaurant_banner';
 import { Section } from '../../components/section';

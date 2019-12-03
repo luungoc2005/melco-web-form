@@ -6,8 +6,8 @@ import { HomePage } from './pages/HomePage';
 import { BookingForm } from './pages/BookingForm';
 import { BookingComplete } from './pages/BookingComplete';
 
-import { Header } from './components/header';
-import Typography from '@material-ui/core/Typography';
+// import { Header } from './components/header';
+// import Typography from '@material-ui/core/Typography';
 import { MuiPickersUtilsProvider } from '@material-ui/pickers';
 import { withStyles, makeStyles } from '@material-ui/core/styles';
 
@@ -16,7 +16,7 @@ import DateFnsUtils from '@date-io/date-fns';
 
 import {IntlProvider, FormattedMessage} from 'react-intl';
 
-import { messages } from './intl';
+import { messages, dateFnsLocales } from './intl';
 
 export const PRIMARY_COLOR = '#002B49'
 export const SECONDARY_COLOR = '#B58D3D'
@@ -153,41 +153,42 @@ function App() {
   useEffect(() => {
     async function fetchRestaurantData() {
       if (micrositeId) {
-        const resp = await RestaurantAPI.getRestaurant({ micrositeId })
+        const resp = await RestaurantAPI.getRestaurant({ micrositeId, language })
         setRestaurantData(resp.data);
       }
     }
     async function fetchRestaurantSetup() {
       if (micrositeId) {
-        const resp = await RestaurantAPI.getOnlineBookingSetup({ micrositeId })
+        const resp = await RestaurantAPI.getOnlineBookingSetup({ micrositeId, language })
         const data = resp.data;
         const { bookingReasons, minOnlinePartySize } = data;
         console.log(bookingReasons)
         setRestaurantSetup(data);
-        setFormData({...formData, partySize: minOnlinePartySize, visitTime: '', bookingReasons});
+        setFormData(formData => ({...formData, partySize: minOnlinePartySize, visitTime: '', bookingReasons}));
       }
     }
     fetchRestaurantData();
     fetchRestaurantSetup();
-  }, [])
+  }, [micrositeId, language])
   useEffect(() => {
     console.log(getSearchParams())
     async function fetchData() {
       setTimeRanges(null);
       setTimeRangesLoading(true);
-      setFormData({...formData, visitTime: ''});
+      setFormData(formData => ({...formData, visitTime: ''}));
 
       const resp = await RestaurantAPI.getRestaurantAvailability({ 
         micrositeId,
         partySize: formData.partySize,
-        visitDate: _format(formData.visitDate, 'yyyy-MM-d')
+        visitDate: _format(formData.visitDate, 'yyyy-MM-d'),
+        language,
       });
 
       setTimeRanges(resp.data || []);
       setTimeRangesLoading(false);
     }
     fetchData();
-  }, [formData.visitDate, formData.partySize])
+  }, [micrositeId, language, formData.visitDate, formData.partySize])
 
   const navigate = (path) => {
     setCurrentPath(path)
@@ -195,12 +196,12 @@ function App() {
   }
 
   const locale = language || 'en-US'
-  
+
   return (
     <IntlProvider locale={locale} messages={messages[locale]}>
     <div className="App">
       <GlobalCss />
-      <MuiPickersUtilsProvider utils={DateFnsUtils}>
+      <MuiPickersUtilsProvider utils={DateFnsUtils} locale={dateFnsLocales[locale]}>
         <div style={{ margin: '0px 24px' }}>
         {/* <Header
           onBackButtonClick={

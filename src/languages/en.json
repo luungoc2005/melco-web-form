@@ -12,6 +12,10 @@
     "defaultMessage": "{hours}:{minutes} {am_pm}"
   },
   {
+    "id": "common.document.title",
+    "defaultMessage": "Restaurant Booking"
+  },
+  {
     "id": "home.date_button.today",
     "defaultMessage": "Today"
   },
@@ -28,7 +32,123 @@
     "defaultMessage": "Dates"
   },
   {
-    "id": "home.section_dates.format",
+    "id": "home.section_dates.visit_date_format",
     "defaultMessage": "d MMM"
+  },
+  {
+    "id": "home.section_details.guests_count_format",
+    "defaultMessage": "{num_guests, plural,\n=0 {no guest}\none {# guest}\nother {# guests}\n}"
+  },
+  {
+    "id": "home.section_time.title",
+    "defaultMessage": "Time"
+  },
+  {
+    "id": "home.section_time.error_no_range_title",
+    "defaultMessage": "There are no available time slots for this date."
+  },
+  {
+    "id": "home.section_time.error_no_range_message",
+    "defaultMessage": "Please try another one."
+  },
+  {
+    "id": "common.buttons.continue",
+    "defaultMessage": "Continue"
+  },
+  {
+    "id": "booking.section_details.title",
+    "defaultMessage": "Booking Details"
+  },
+  {
+    "id": "home.section_details.visit_date_format",
+    "defaultMessage": "d MMM (iii)"
+  },
+  {
+    "id": "booking.section_contact_information.title",
+    "defaultMessage": "Contact Information"
+  },
+  {
+    "id": "booking.section_contact_information.name_title_mr",
+    "defaultMessage": "Mr."
+  },
+  {
+    "id": "booking.section_contact_information.name_title_ms",
+    "defaultMessage": "Ms."
+  },
+  {
+    "id": "booking.section_contact_information.name_title_mrs",
+    "defaultMessage": "Mrs."
+  },
+  {
+    "id": "booking.section_contact_information.input_first_name",
+    "defaultMessage": "First Name"
+  },
+  {
+    "id": "booking.section_contact_information.input_first_name_placeholder",
+    "defaultMessage": "Enter your first name"
+  },
+  {
+    "id": "booking.section_contact_information.input_last_name",
+    "defaultMessage": "Last Name"
+  },
+  {
+    "id": "booking.section_contact_information.input_last_name_placeholder",
+    "defaultMessage": "Enter your last name"
+  },
+  {
+    "id": "booking.section_contact_information.input_phone_number",
+    "defaultMessage": "Phone Number"
+  },
+  {
+    "id": "booking.section_contact_information.input_phone_number_default_country",
+    "defaultMessage": "mo"
+  },
+  {
+    "id": "booking.section_contact_information.input_email",
+    "defaultMessage": "Email"
+  },
+  {
+    "id": "booking.section_contact_information.input_email_placeholder",
+    "defaultMessage": "Enter an email address"
+  },
+  {
+    "id": "booking.section_special_requests.title",
+    "defaultMessage": "Special Requests"
+  },
+  {
+    "id": "booking.section_special_requests.input_special_requests",
+    "defaultMessage": "Please enter special requests"
+  },
+  {
+    "id": "booking.section_special_occasions.title",
+    "defaultMessage": "Special Occasions"
+  },
+  {
+    "id": "common.buttons.back",
+    "defaultMessage": "Back"
+  },
+  {
+    "id": "common.buttons.book",
+    "defaultMessage": "Book"
+  },
+  {
+    "id": "booking_complete.booking_error.title",
+    "defaultMessage": "Your booking is not complete"
+  },
+  {
+    "id": "booking_complete.booking_error.message",
+    "defaultMessage": "An error orcurred. Please click the Back button and try again."
+  },
+  {
+    "id": "booking_complete.messages.wait",
+    "defaultMessage": "Please wait..."
+  },
+  {
+    "id": "booking_complete.messages.complete_title",
+    "defaultMessage": "Your booking is complete"
+  },
+  {
+    "id": "booking_complete.messages.complete_message",
+    "defaultMessage": "Please click the Back button to go back to the chat."
   }
 ]

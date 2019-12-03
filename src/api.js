@@ -8,10 +8,10 @@ const BOTBOT_API_URL = process.env.REACT_APP_BOTBOT_API_URL
 export const getSearchParams = () => parse(window.location.search.substring(1))
 
 export const RestaurantAPI = {
-  getRestaurant: ({ micrositeId }) => axios.get(`${BOTBOT_API_URL}/api/restaurant/${micrositeId}/content`),
-  getOnlineBookingSetup: ({ micrositeId }) => axios.get(`${BOTBOT_API_URL}/api/restaurant/${micrositeId}/setup`),
-  getRestaurantAvailability: ({ micrositeId, partySize, visitDate }) => 
-    axios.get(`${MELCO_SERVICE_API_URL}/v1/restaurants/${micrositeId}/availabilitySearch?${stringify({ partySize, visitDate })}`),
+  getRestaurant: ({ micrositeId, language }) => axios.get(`${BOTBOT_API_URL}/api/restaurant/${micrositeId}/content?${stringify({ language })}`),
+  getOnlineBookingSetup: ({ micrositeId, language }) => axios.get(`${BOTBOT_API_URL}/api/restaurant/${micrositeId}/setup?${stringify({ language })}`),
+  getRestaurantAvailability: ({ micrositeId, partySize, visitDate, language }) => 
+    axios.get(`${MELCO_SERVICE_API_URL}/v1/restaurants/${micrositeId}/availabilitySearch?${stringify({ partySize, visitDate, language })}`),
   bookRestaurant: ({ params, data }) => 
     axios.post(`${BOTBOT_API_URL}/api/resBooking/booking?${stringify(params)}`, data)
 }

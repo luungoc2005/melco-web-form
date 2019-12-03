@@ -14,7 +14,7 @@ export const formatTime = (time, intl) => {
     tmp[0] = + tmp[0] % 12 || 12;
   }
   
-  console.log(tmp)
+  // console.log(tmp)
   return tmp.length > 1
   ? intl.formatMessage({
       id: 'common.time_format.time_format',

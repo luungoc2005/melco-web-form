@@ -21,7 +21,7 @@ import _format from 'date-fns/format';
 
 import { formatTime } from '../../utils';
 
-import { useIntl, FormattedMessage } from 'react-intl';
+import { useIntl, FormattedMessage, FormattedPlural } from 'react-intl';
 import { dateFnsLocales } from '../../intl';
 
 const useStyles = makeStyles(theme => ({
@@ -64,11 +64,11 @@ export const BookingForm = () => {
           <Typography variant="body2">
             <Icon style={{ color: SECONDARY_COLOR, marginRight: 12 }}>calendar_today</Icon>
             {_format(formData.visitDate, intl.formatMessage({ 
-                id: 'home.section_details.visit_date_format',
-                defaultMessage: 'd MMM (iii)',
-              }), {
-                locale: dateFnsLocales[intl.locale]
-              })}
+              id: 'home.section_details.visit_date_format',
+              defaultMessage: 'd MMM (iii)',
+            }), {
+              locale: dateFnsLocales[intl.locale]
+            })}
           </Typography>
         </div>
         <div style={{ flex: 1 }}>
@@ -80,7 +80,17 @@ export const BookingForm = () => {
         <div style={{ flex: 1 }}>
           <Typography variant="body2">
             <Icon style={{ color: SECONDARY_COLOR, marginRight: 12 }}>person</Icon>
-            {`${formData.partySize} guest${formData.partySize > 1 ? 's' : ''}`}
+            <FormattedMessage
+              id='home.section_details.guests_count_format'
+              defaultMessage='{num_guests, plural,
+                =0 {no guest}
+                one {# guest}
+                other {# guests}
+              }'
+              values={{
+                num_guests: formData.partySize,
+              }}
+            />
           </Typography>
         </div> 
       </Section>
