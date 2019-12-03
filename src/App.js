@@ -174,7 +174,7 @@ function App() {
       const resp = await RestaurantAPI.getRestaurantAvailability({ 
         micrositeId,
         partySize: formData.partySize,
-        visitDate: _format(formData.visitDate, 'yyyy-MM-d')
+        visitDate: _format(formData.visitDate, 'yyyy-MM-dd')
       });
 
       setTimeRanges(resp.data || []);

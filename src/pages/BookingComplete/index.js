@@ -38,7 +38,7 @@ export const BookingComplete = () => {
       
       const requestData = {
         micrositeName: micrositeId,
-        visitDate: _format(formData.visitDate, 'yyyy-MM-d'),
+        visitDate: _format(formData.visitDate, 'yyyy-MM-dd'),
         visitTime: formData.visitTime,
         partySize: formData.partySize,
         specialRequests: formData.specialRequests,

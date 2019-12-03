@@ -6,25 +6,29 @@ import Typography from '@material-ui/core/Typography';
 import Icon from '@material-ui/core/Icon';
 
 export const RestaurantBanner = ({ restaurantData }) => {
-  const { property, addressShort, phone, images } = restaurantData;
+  const { name, property, address, addressShort, phone, images } = restaurantData;
   return (<>
   <div style={{ display: 'flex', marginBottom: 12 }} >
     <div style={{ flex: 3 }}>
-      <Typography variant="h5" style={{ marginBottom: 24 }}>
-        {property}
+      {(name || property)
+      ? <Typography variant="h5" style={{ marginBottom: 24 }}>
+        {name || property}
       </Typography>
+      : <></>}
       {phone && <div style={{ color: SECONDARY_COLOR, marginBottom: 6 }}>
         <Typography variant="body2">
           <Icon style={{ marginRight: 12 }}>call</Icon>
           {phone}
         </Typography>
       </div>}
-      {addressShort && <div>
+      {(addressShort || address) 
+      ? <div>
         <Typography variant="body2">
           <Icon style={{ color: SECONDARY_COLOR, marginRight: 12 }}>map</Icon>
-          {addressShort}
+          {addressShort || address}
         </Typography>
-      </div>}
+        </div>
+      : <></>}
     </div>
     <div style={{ flex: 1, overflow: 'hidden' }}>
       {images && <img src={images[0]} alt={property} style={{ 
