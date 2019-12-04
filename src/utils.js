@@ -9,9 +9,12 @@ export const formatTime = (time, intl) => {
     id: 'common.time_format.pm_text',
     defaultMessage: 'pm'
   })
+  
+  let am_pm_tmp = 0;
   if (tmp.length > 1) {
     tmp = tmp.slice (1);
-    tmp[0] = + tmp[0] % 12 || 12;
+    am_pm_tmp = +tmp[0];
+    tmp[0] = +tmp[0] % 12 || 12;
   }
   
   // console.log(tmp)
@@ -22,7 +25,7 @@ export const formatTime = (time, intl) => {
     }, {
       hours: tmp[0],
       minutes: tmp[2],
-      am_pm: tmp[0] < 12 ? am_text : pm_text
+      am_pm: am_pm_tmp < 12 ? am_text : pm_text
     })
   : "";
 }
