@@ -21,7 +21,7 @@ export const RestaurantBanner = ({ restaurantData }) => {
           {phone}
         </Typography>
       </div>}
-      {(addressShort || address) 
+      {(addressShort || address)
       ? <div>
         <Typography variant="body2">
           <Icon style={{ color: SECONDARY_COLOR, marginRight: 12 }}>map</Icon>
