@@ -60,7 +60,7 @@
     "defaultMessage": "Booking Details"
   },
   {
-    "id": "home.section_details.visit_date_format",
+    "id": "booking.section_details.visit_date_format",
     "defaultMessage": "d MMM (iii)"
   },
   {

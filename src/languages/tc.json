@@ -60,8 +60,8 @@
     "defaultMessage": "預訂詳情"
   },
   {
-    "id": "home.section_details.visit_date_format",
-    "defaultMessage": "MMM d (iii)"
+    "id": "booking.section_details.visit_date_format",
+    "defaultMessage": "MMM do (iii)"
   },
   {
     "id": "booking.section_contact_information.title",

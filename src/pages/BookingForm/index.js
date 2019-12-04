@@ -64,7 +64,7 @@ export const BookingForm = () => {
           <Typography variant="body2">
             <Icon style={{ color: SECONDARY_COLOR, marginRight: 12 }}>calendar_today</Icon>
             {_format(formData.visitDate, intl.formatMessage({ 
-              id: 'home.section_details.visit_date_format',
+              id: 'booking.section_details.visit_date_format',
               defaultMessage: 'd MMM (iii)',
             }), {
               locale: dateFnsLocales[intl.locale]
