@@ -5,10 +5,8 @@ import * as serviceWorker from './serviceWorker';
 
 import './index.css';
 
-export let _messengerExtensions = null;
-
 // polyfill
-const areIntlLocalesSupported = require('intl-locales-supported');
+import areIntlLocalesSupported from 'intl-locales-supported';
 
 const localesMyAppSupports = [
   /* list locales here */
@@ -31,6 +29,8 @@ if (
   require('@formatjs/intl-relativetimeformat/dist/locale-data/en'); // Load en
   require('@formatjs/intl-relativetimeformat/dist/locale-data/zh'); // Load zh
 }
+
+export let _messengerExtensions = null;
 
 (function (d, s, id) {
   var js, fjs = d.getElementsByTagName(s)[0];
