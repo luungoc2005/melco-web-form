@@ -11,6 +11,8 @@ import { BookingComplete } from './pages/BookingComplete';
 import { MuiPickersUtilsProvider } from '@material-ui/pickers';
 import { withStyles, makeStyles } from '@material-ui/core/styles';
 
+import { getCurrentEnvironment } from './mobile';
+
 import _format from 'date-fns/format';
 import DateFnsUtils from '@date-io/date-fns';
 
@@ -203,15 +205,15 @@ function App() {
       <GlobalCss />
       <MuiPickersUtilsProvider utils={DateFnsUtils} locale={dateFnsLocales[locale]}>
         <div style={{ margin: '0px 24px' }}>
-        {/* <Header
+        {getCurrentEnvironment() === 'miniprogram' && <Header
           onBackButtonClick={
             currentPath === '/'
             ? undefined
-            : () => navigate('/')
+            : window.close
           }
         >
           <Typography variant="h6" style={{ textAlign: 'center', userSelect: 'none' }}>Restaurant Booking</Typography>
-        </Header> */}
+        </Header>}
         {AppContext && <AppContext.Provider value={{
           currentPath,
           setCurrentPath: navigate,
