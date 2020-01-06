@@ -193,6 +193,11 @@ function App() {
     }
     fetchData();
   }, [micrositeId, language, formData.visitDate, formData.partySize])
+  useEffect(() => {
+    if (getCurrentEnvironment() === 'miniprogram' || __bb_platform == 'miniprogram') {
+      window.close = () => window.parent && window.parent.postMessage('WINDOW_CLOSE', '*')
+    }
+  }, [])
 
   const navigate = (path) => {
     setCurrentPath(path)
