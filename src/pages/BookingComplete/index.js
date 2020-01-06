@@ -29,7 +29,7 @@ export const BookingComplete = () => {
       setBookingError(false);
       setBookingLoading(true);
   
-      const { micrositeId, ...params } = getSearchParams();
+      const { micrositeId, __bb_platform, ...params } = getSearchParams();
       console.log(params)
   
       const dialCode = formData.country.dialCode.toString();

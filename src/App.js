@@ -151,6 +151,7 @@ function App() {
   const { 
     micrositeId,
     language,
+    __bb_platform,
   } = getSearchParams();
 
   useEffect(() => {
@@ -206,7 +207,7 @@ function App() {
       <GlobalCss />
       <MuiPickersUtilsProvider utils={DateFnsUtils} locale={dateFnsLocales[locale]}>
         <div style={{ margin: '0px 24px' }}>
-        {getCurrentEnvironment() === 'miniprogram' && <Header
+        {getCurrentEnvironment() === 'miniprogram' || __bb_platform == 'miniprogram' ? <Header
           onBackButtonClick={
             currentPath === '/'
             ? undefined
@@ -214,7 +215,8 @@ function App() {
           }
         >
           <Typography variant="h6" style={{ textAlign: 'center', userSelect: 'none' }}>Restaurant Booking</Typography>
-        </Header>}
+        </Header>
+        : <></>}
         {AppContext && <AppContext.Provider value={{
           currentPath,
           setCurrentPath: navigate,
