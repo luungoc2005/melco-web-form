@@ -6,8 +6,9 @@ import { HomePage } from './pages/HomePage';
 import { BookingForm } from './pages/BookingForm';
 import { BookingComplete } from './pages/BookingComplete';
 
-// import { Header } from './components/header';
-// import Typography from '@material-ui/core/Typography';
+import { Header } from './components/header';
+import Typography from '@material-ui/core/Typography';
+
 import { MuiPickersUtilsProvider } from '@material-ui/pickers';
 import { withStyles, makeStyles } from '@material-ui/core/styles';
 
