@@ -1,16 +1,8 @@
-import { appStore } from './Store';
 import * as wx from 'weixin-js-sdk';
 
 window.setSdkParameter = (name, value) => {
   console.log(`[ setSdkParameter call ] name: {${name}}, value: {${value}}`)
   switch (name) {
-    case 'jwtToken':
-      appStore.dispatch({
-        'type': 'User_Update',
-        user: { jwtToken: value },
-      })
-      break;
-
     default:
       break;
   }
