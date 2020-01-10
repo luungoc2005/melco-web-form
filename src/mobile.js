@@ -50,7 +50,7 @@ export const triggers = {
 export const setupMiniprogramSDK = () => {
   const callback = () => {
     if (getCurrentEnvironment() === 'miniprogram') {
-      window.close = () => wx && wx.miniProgram && wx.miniProgram.navigateBack({ delta: 1})
+      window.close = () => window.wx && window.wx.miniProgram && window.wx.miniProgram.navigateBack({ delta: 1})
   
       console.log('miniprogram SDK loaded')
       // disable links
