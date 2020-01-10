@@ -1,4 +1,4 @@
-import * as wx from 'weixin-js-sdk';
+// import * as wx from 'weixin-js-sdk';
 
 window.setSdkParameter = (name, value) => {
   console.log(`[ setSdkParameter call ] name: {${name}}, value: {${value}}`)
