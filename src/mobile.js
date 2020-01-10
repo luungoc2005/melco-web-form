@@ -47,20 +47,11 @@ export const triggers = {
 //   headTag.appendChild(scriptTag);
 // }
 
-export const setupMiniprogramSDK = (window_open, window_close) => {
+export const setupMiniprogramSDK = () => {
   const callback = () => {
     if (getCurrentEnvironment() === 'miniprogram') {
-      window.open = url => {
-        window_open(url)
-        return null;
-      }
-      window.close_popup = () => {
-        window_close()
-      }
+      window.close = () => wx && wx.miniProgram && wx.miniProgram.navigateBack({ delta: 1})
   
-      wx.miniProgram.postMessage({ data: { 
-        type: 'SDK_LOADED',
-      }})
       console.log('miniprogram SDK loaded')
       // disable links
     

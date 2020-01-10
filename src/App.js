@@ -6,13 +6,13 @@ import { HomePage } from './pages/HomePage';
 import { BookingForm } from './pages/BookingForm';
 import { BookingComplete } from './pages/BookingComplete';
 
-import { Header } from './components/header';
-import Typography from '@material-ui/core/Typography';
+// import { Header } from './components/header';
+// import Typography from '@material-ui/core/Typography';
 
 import { MuiPickersUtilsProvider } from '@material-ui/pickers';
 import { withStyles, makeStyles } from '@material-ui/core/styles';
 
-import { getCurrentEnvironment } from './mobile';
+import { getCurrentEnvironment, setupMiniprogramSDK } from './mobile';
 
 import _format from 'date-fns/format';
 import DateFnsUtils from '@date-io/date-fns';
@@ -194,9 +194,7 @@ function App() {
     fetchData();
   }, [micrositeId, language, formData.visitDate, formData.partySize])
   useEffect(() => {
-    if (getCurrentEnvironment() === 'miniprogram' || __bb_platform == 'miniprogram') {
-      window.close = () => window.parent && window.parent.postMessage('WINDOW_CLOSE', '*')
-    }
+    setupMiniprogramSDK();
   }, [])
 
   const navigate = (path) => {
@@ -212,7 +210,7 @@ function App() {
       <GlobalCss />
       <MuiPickersUtilsProvider utils={DateFnsUtils} locale={dateFnsLocales[locale]}>
         <div style={{ margin: '0px 24px' }}>
-        {getCurrentEnvironment() === 'miniprogram' || __bb_platform == 'miniprogram' ? <Header
+        {/* {getCurrentEnvironment() === 'miniprogram' || __bb_platform == 'miniprogram' ? <Header
           onBackButtonClick={
             currentPath === '/'
             ? undefined
@@ -221,7 +219,7 @@ function App() {
         >
           <Typography variant="h6" style={{ textAlign: 'center', userSelect: 'none' }}>Restaurant Booking</Typography>
         </Header>
-        : <></>}
+        : <></>} */}
         {AppContext && <AppContext.Provider value={{
           currentPath,
           setCurrentPath: navigate,
