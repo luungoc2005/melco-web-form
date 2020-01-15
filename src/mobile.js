@@ -15,7 +15,7 @@ export const getCurrentEnvironment = () => {
   else if (window.webkit) {
     return 'ios';
   }
-  else if (window.__wxjs_environment === 'miniprogram') {
+  else if (window.__wxjs_environment === 'miniprogram' || window.location.hash === "#wechat_redirect") {
     return 'miniprogram';
   }
   else {
