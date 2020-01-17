@@ -8,15 +8,17 @@ window.setSdkParameter = (name, value) => {
   }
 }
 
+let is_miniprogram = false;
+window.wx.miniProgram.getEnv((res) => { is_miniprogram = res.miniprogram })
 export const getCurrentEnvironment = () => {
-  if (window.Android) {
+  if (window.__wxjs_environment === 'miniprogram' || is_miniprogram) {
+    return 'miniprogram';
+  }
+  else if (window.Android) {
     return 'android';
   }
   else if (window.webkit) {
     return 'ios';
-  }
-  else if (window.__wxjs_environment === 'miniprogram' || window.location.hash === "#wechat_redirect") {
-    return 'miniprogram';
   }
   else {
     return 'web';
