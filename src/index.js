@@ -5,30 +5,13 @@ import * as serviceWorker from './serviceWorker';
 
 import './index.css';
 
-// polyfill
-import areIntlLocalesSupported from 'intl-locales-supported';
+import '@formatjs/intl-pluralrules/polyfill';
+import '@formatjs/intl-pluralrules/dist/locale-data/en'; // Load en
+import '@formatjs/intl-pluralrules/dist/locale-data/zh'; // Load zh
 
-const localesMyAppSupports = [
-  /* list locales here */
-];
-
-// Determine if the built-in `Intl` has the locale data we need.
-if (
-  !areIntlLocalesSupported(localesMyAppSupports, [
-    Intl.PluralRules,
-    Intl.RelativeTimeFormat,
-  ])
-) {
-  // `Intl` exists, but it doesn't have the data we need, so load the
-  // polyfill and replace the constructors we need with the polyfill's.
-  require('@formatjs/intl-pluralrules/polyfill');
-  require('@formatjs/intl-pluralrules/dist/locale-data/en'); // Load en
-  require('@formatjs/intl-pluralrules/dist/locale-data/zh'); // Load zh
-
-  require('@formatjs/intl-relativetimeformat/polyfill');
-  require('@formatjs/intl-relativetimeformat/dist/locale-data/en'); // Load en
-  require('@formatjs/intl-relativetimeformat/dist/locale-data/zh'); // Load zh
-}
+import '@formatjs/intl-relativetimeformat/polyfill';
+import '@formatjs/intl-relativetimeformat/dist/locale-data/en'; // Load en
+import '@formatjs/intl-relativetimeformat/dist/locale-data/zh'; // Load zh
 
 export let _messengerExtensions = null;
 

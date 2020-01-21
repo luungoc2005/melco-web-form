@@ -205,7 +205,7 @@ function App() {
   const locale = language || 'en-US'
 
   return (
-    <IntlProvider locale={locale} messages={messages[locale]}>
+    <IntlProvider locale={locale.split('-')[0].toLowerCase()} messages={messages[locale]}>
     <div className="App">
       <GlobalCss />
       <MuiPickersUtilsProvider utils={DateFnsUtils} locale={dateFnsLocales[locale]}>
