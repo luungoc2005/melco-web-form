@@ -15,7 +15,7 @@
     "date-fns": "^2.0.0-beta.5",
     "intl": "^1.2.5",
     "intl-locales-supported": "^1.8.4",
-    "lodash": "^4.17.15",
+    "lodash": "^4.17.21",
     "material-ui-phone-number": "^2.2.2",
     "react": "^16.11.0",
     "react-dom": "^16.11.0",
